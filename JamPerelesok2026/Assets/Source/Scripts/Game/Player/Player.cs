@@ -17,8 +17,17 @@ public class Player : MonoBehaviour
         _root = root;
         _rigidbody = GetComponent<Rigidbody2D>();
 
+        SetStartPosition();
+
         _playerMovment.Initialize(this, _root.InputHandler);
     }
 
+    #region >>> LAYER POSITION
 
+    private void SetStartPosition()
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y, GlobalVars.PlayerPositionZ);
+    }
+
+    #endregion
 }
