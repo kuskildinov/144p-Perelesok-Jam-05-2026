@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerMovment _playerMovment;
     [SerializeField] private PlayerVisual _playerVisual;
+    [SerializeField] private PlayerInteractions _playerInteractions;
 
     private CharacterController _characterController;
     private bool _isActive = true;
@@ -17,18 +18,22 @@ public class Player : MonoBehaviour
     {
         _root = root;
         _characterController = GetComponent<CharacterController>();
-
-        SetStartPosition();
-
+        
         _playerMovment.Initialize(this, _root.InputHandler);
         _playerVisual.Initialize(this, _root.InputHandler);
+        _playerInteractions.Initialize(this, _root.InputHandler);
     }
 
-    #region >>> LAYER POSITION
+    #region >>> ITEMS
 
-    private void SetStartPosition()
+    public void OnItemTaked(ItemType type)
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, GlobalVars.PlayerPositionZ);
+        _playerVisual.OnItemTaked(type);
+    }
+
+    public void OnItemDropped(ItemType type)
+    {
+        _playerVisual.OnItemDropped(type);
     }
 
     #endregion

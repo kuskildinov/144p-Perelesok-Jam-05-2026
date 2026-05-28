@@ -2,39 +2,67 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    [SerializeField] private ItemType _type;
+    [SerializeField] private GameObject _visual;
+    [Header("Indicator")]
+    [SerializeField] private GameObject _targetIndeicator;
+
+    private bool _isTaked = false;
+  
+    public ItemType Type => _type;
+    public bool IsTaked => _isTaked;
 
     public void Initialize()
     {
-
+        HideTargetIndicator();                
     }
 
-    private void Start()
+    #region >>> TARGET INDEICATOR
+
+    public void ShowTargetIndicator()
     {
-        SetStartPosition();
+        if (_isTaked)
+            return;
+
+        _targetIndeicator.gameObject.SetActive(true);      
     }
 
-    #region >>> POSITION
-
-    private void SetStartPosition()
+    public void HideTargetIndicator()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, GlobalVars.ItemPositionZ);
+        if (_isTaked)
+            return;
+
+        _targetIndeicator.gameObject.SetActive(false);      
     }
 
     #endregion
+    #region >>> TAKE
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public virtual void TryTake()
     {
-        if(collision.gameObject.TryGetComponent<LevelBlock>(out LevelBlock block))
-        {
-            block.AddItem(this);
-        }
+        _isTaked = true;
+        _visual.gameObject.SetActive(false);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public virtual void TryDrop(Transform playerTransform)
     {
-        if (collision.gameObject.TryGetComponent<LevelBlock>(out LevelBlock block))
-        {
-            block.RemoveItem(this);
-        }
+        _isTaked = false;
+        transform.position = playerTransform.position;
+        _visual.gameObject.SetActive(true);
     }
+
+    #endregion
+    #region >>> ACTIVATION
+
+
+
+    #endregion
+
+}
+
+public enum ItemType
+{
+    Light,
+    Sword,
+    Key,
 }

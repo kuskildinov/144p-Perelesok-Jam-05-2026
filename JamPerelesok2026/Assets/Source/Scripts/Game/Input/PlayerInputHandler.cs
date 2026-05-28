@@ -6,6 +6,7 @@ public class PlayerInputHandler : MonoBehaviour
 {
     public event Action<Vector2> MoveInput;
     public event Action AttackInput;
+    public event Action InteractInput;
 
    public void OnMove(InputValue value)
     {       
@@ -15,9 +16,16 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnAttack(InputValue value)
     {
         if (value.isPressed)
-        {            
-            Debug.Log("Attack!");
+        { 
             AttackInput?.Invoke();
+        }
+    }
+
+    public void OnInteract(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            InteractInput?.Invoke();
         }
     }
 }

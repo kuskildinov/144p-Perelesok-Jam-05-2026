@@ -2,43 +2,64 @@ using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
 {
-    [SerializeField] private Transform _spriteTransform;
+    [SerializeField] private GameObject _keyView;
+    [SerializeField] private GameObject _swordView;
+    [SerializeField] private GameObject _lightView;
+
     private Player _player;
     private PlayerInputHandler _inputHandler;  
     private Vector3 _movement;
-    private Camera _targetCamera;
+    private GameObject _currentShowedView;
+   
 
     public void Initialize(Player player, PlayerInputHandler inputHandler)
     {
         _player = player;
-        _inputHandler = inputHandler;
-        _targetCamera = Camera.main;
+        _inputHandler = inputHandler;      
 
         SubscribeToEvents();
     }
 
-    private void LateUpdate()
+    #region >>> ITEM VIEW
+
+    public void OnItemTaked(ItemType type)
     {
-        RotateToCamHandler();
+        ToggleItemViewByType(type, true);
     }
 
-    #region >>> LOOK AT CAM
-
-    private void RotateToCamHandler()
+    public void OnItemDropped(ItemType type)
     {
-        if (_targetCamera == null) return;
+        ToggleItemViewByType(type, false);
+    }
 
-        Vector3 directionToCamera = _targetCamera.transform.position - _spriteTransform.position;
-        
-        //directionToCamera.z = 0;
-        directionToCamera.x = 0;
-        //directionToCamera.y = 0;
-
-        if (directionToCamera != Vector3.zero)
+    private void ToggleItemViewByType(ItemType type, bool value)
+    {
+        if (_currentShowedView != null)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(directionToCamera);
-            _spriteTransform.rotation = targetRotation;
+            _currentShowedView.gameObject.SetActive(false);
+            _currentShowedView = null;
         }
+
+        switch(type)
+        {
+            case ItemType.Light:
+                {
+                    _currentShowedView = _lightView;
+                    break;
+                }
+            case ItemType.Key:
+                {
+                    _currentShowedView = _keyView;
+                    break;
+                }
+            case ItemType.Sword:
+                {
+                    _currentShowedView = _swordView;
+                    break;
+                }
+        }
+
+        _currentShowedView.gameObject.SetActive(value);
     }
 
     #endregion
