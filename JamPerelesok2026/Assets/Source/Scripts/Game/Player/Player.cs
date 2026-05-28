@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerMovment _playerMovment;
+    [SerializeField] private PlayerVisual _playerVisual;
 
     private CharacterController _characterController;
     private bool _isActive = true;
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
         SetStartPosition();
 
         _playerMovment.Initialize(this, _root.InputHandler);
+        _playerVisual.Initialize(this, _root.InputHandler);
     }
 
     #region >>> LAYER POSITION
