@@ -1,21 +1,21 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerMovment _playerMovment;
 
+    private CharacterController _characterController;
     private bool _isActive = true;
     private PlayerRoot _root;
-    private Rigidbody2D _rigidbody;
-
+   
     public bool IsActive => _isActive;
-    public Rigidbody2D Rigidbody => _rigidbody;
+    public CharacterController Controller => _characterController;
 
    public void Initialzie(PlayerRoot root)
     {
         _root = root;
-        _rigidbody = GetComponent<Rigidbody2D>();
+        _characterController = GetComponent<CharacterController>();
 
         SetStartPosition();
 

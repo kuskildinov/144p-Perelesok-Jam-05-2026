@@ -7,10 +7,9 @@ public class PlayerMovment : MonoBehaviour
 
     private Player _player;
     private PlayerInputHandler _inputHandler;
-    private Vector2 _moveInput;
-    private Vector2 _movement;
-    private Rigidbody2D _rigidbody => _player.Rigidbody;
-
+    private Vector3 _moveInput;
+    private Vector3 _movement;
+    
     public void Initialize(Player player, PlayerInputHandler inputHandler)
     {
         _player = player;
@@ -30,8 +29,8 @@ public class PlayerMovment : MonoBehaviour
     #region >>> MOVE
 
     private void MoveHandler()
-    {
-        _rigidbody.linearVelocity = _movement * _moveSpeed;
+    {        
+        _player.Controller.Move(_movement * _moveSpeed * Time.deltaTime);
     }
 
     #endregion
@@ -50,7 +49,7 @@ public class PlayerMovment : MonoBehaviour
     private void OnMoveInputChanged(Vector2 moveInput)
     {
         _moveInput = moveInput;
-        _movement = _moveInput.normalized;
+        _movement = new Vector3(moveInput.x, 0f, moveInput.y).normalized;      
     }
     #endregion
 

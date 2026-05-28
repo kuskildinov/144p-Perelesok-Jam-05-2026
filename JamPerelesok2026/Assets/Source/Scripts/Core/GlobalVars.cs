@@ -6,7 +6,7 @@ public static class GlobalVars
     public static int PlayerPositionZ = -10;
     // MovebleBlocks
     public static int MovableBlockPositionZ = 0;
-    public static int MovableBlockActivePositionZ = -5;
+    public static int MovableBlockActivePositionZ = 5;
     // Items
-    public static int ItemPositionZ = -1;
+    public static int ItemPositionZ = -6;
 }

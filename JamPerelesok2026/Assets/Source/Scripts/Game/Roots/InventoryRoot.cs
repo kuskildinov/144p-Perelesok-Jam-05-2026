@@ -1,16 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryRoot : MonoBehaviour
+public class InventoryRoot : CompositeRoot
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Inventory _inventory;
 
-    // Update is called once per frame
-    void Update()
+    public override void Compose()
     {
-        
+        _inventory.Initialize();
     }
 }

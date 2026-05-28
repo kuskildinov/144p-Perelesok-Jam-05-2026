@@ -10,7 +10,7 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Transform _itemsContainer;
     [Header("Animation Settings")]
     [SerializeField] private float _rotateDuration = 0.5f;
-    [SerializeField] private float _scaleMultiplier = 1.2f;
+    [SerializeField] private float _scaleMultiplier = -1.2f;
     [SerializeField] private float _scaleDuration = 0.15f;
 
     [SerializeField] private List<Item> _items = new List<Item>();
@@ -31,28 +31,14 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler
     {
         if (!_canMove)
             return;
-
-        SetActivePosition();
+               
         RotateObject(gameObject,true,
             () =>
             {
-                ResetPosition();
+               
             });
         RotateAllItems();
-    }
-    #region >>> POSITION
-
-    private void SetActivePosition()
-    {
-        transform.position = new Vector3(transform.position.x, transform.position.y, GlobalVars.MovableBlockActivePositionZ);
-    }
-
-    private void ResetPosition()
-    {
-        transform.position = new Vector3(transform.position.x, transform.position.y, GlobalVars.MovableBlockPositionZ);
-    }
-
-    #endregion
+    }   
     #region >>> ITEMS
     public void AddItem(Item item)
     {
@@ -91,19 +77,19 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler
             angle = 0;
 
         Vector3 targetScale = _originalScale * _scaleMultiplier;
-        Vector3 targetRotation = obj.transform.eulerAngles + new Vector3(0, 0, angle);
+        Vector3 targetRotation = obj.transform.eulerAngles + new Vector3(0f, angle, 0f);
 
         Sequence sequence = DOTween.Sequence();
 
         // 1. Увеличение (подъём)
-        sequence.Append(obj.transform.DOScale(targetScale, _scaleDuration).SetEase(Ease.OutQuad));
+        //sequence.Append(obj.transform.DOScale(targetScale, _scaleDuration).SetEase(Ease.OutQuad));
 
         // 2. Поворот
         sequence.Append(obj.transform.DORotate(targetRotation, _rotateDuration, RotateMode.Fast)
             .SetEase(Ease.InOutQuad));
 
         // 3. Возврат размера
-        sequence.Append(obj.transform.DOScale(_originalScale, _scaleDuration).SetEase(Ease.InQuad));
+        //sequence.Append(obj.transform.DOScale(_originalScale, _scaleDuration).SetEase(Ease.InQuad));
 
         sequence.Play();
 
