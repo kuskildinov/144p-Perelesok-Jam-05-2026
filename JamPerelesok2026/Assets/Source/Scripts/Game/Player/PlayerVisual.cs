@@ -5,18 +5,18 @@ public class PlayerVisual : MonoBehaviour
     [SerializeField] private GameObject _keyView;
     [SerializeField] private GameObject _swordView;
     [SerializeField] private GameObject _lightView;
+    [SerializeField] private Light _light;
 
     private Player _player;
     private PlayerInputHandler _inputHandler;  
     private Vector3 _movement;
     private GameObject _currentShowedView;
-   
 
     public void Initialize(Player player, PlayerInputHandler inputHandler)
     {
         _player = player;
-        _inputHandler = inputHandler;      
-
+        _inputHandler = inputHandler;       
+        _light.range = GlobalVars.LightRadius;
         SubscribeToEvents();
     }
 

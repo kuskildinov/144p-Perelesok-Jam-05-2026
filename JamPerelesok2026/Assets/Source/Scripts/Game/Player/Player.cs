@@ -35,6 +35,14 @@ public class Player : MonoBehaviour
         SubscribeToEvents();
     }
 
+    #region >>> ACTIVATION
+
+    public void ToggleActivation(bool value)
+    {
+        _isActive = value;
+    }
+
+    #endregion
     #region >>> ITEMS
 
     public Item GetCurrentTakedItem()

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class Item : MonoBehaviour
 {
     [SerializeField] private ItemType _type;
@@ -7,14 +8,22 @@ public class Item : MonoBehaviour
     [Header("Indicator")]
     [SerializeField] private GameObject _targetIndeicator;
 
+    private Collider _collider;
     private bool _isTaked = false;
   
     public ItemType Type => _type;
     public bool IsTaked => _isTaked;
 
-    public void Initialize()
+    public  virtual void Initialize()
     {
+        _collider = GetComponent<Collider>();
         HideTargetIndicator();                
+    }
+
+    private void Start()
+    {
+        _collider = GetComponent<Collider>();
+        HideTargetIndicator();
     }
 
     #region >>> TARGET INDEICATOR
@@ -24,7 +33,8 @@ public class Item : MonoBehaviour
         if (_isTaked)
             return;
 
-        _targetIndeicator.gameObject.SetActive(true);      
+        if (_targetIndeicator != null)
+            _targetIndeicator.gameObject.SetActive(true);      
     }
 
     public void HideTargetIndicator()
@@ -32,7 +42,8 @@ public class Item : MonoBehaviour
         if (_isTaked)
             return;
 
-        _targetIndeicator.gameObject.SetActive(false);      
+        if(_targetIndeicator != null)
+            _targetIndeicator.gameObject.SetActive(false);      
     }
 
     #endregion
@@ -41,12 +52,14 @@ public class Item : MonoBehaviour
     public virtual void TryTake()
     {
         _isTaked = true;
+        _collider.enabled = false;
         _visual.gameObject.SetActive(false);
     }
 
     public virtual void TryDrop(Transform playerTransform)
     {
         _isTaked = false;
+        _collider.enabled = true;
         transform.position = playerTransform.position;
         _visual.gameObject.SetActive(true);
     }

@@ -5,6 +5,7 @@ public class PlayerRoot : CompositeRoot
     private Player _player;
     private PlayerInputHandler _inputHandler;
 
+    public Player Player => _player;
     public PlayerInputHandler InputHandler => _inputHandler;
 
     public override void Compose()
