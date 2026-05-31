@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Transform _itemsContainer;
-    [SerializeField] private GameObject _outline;
+    [SerializeField] private List<LevelBlockCell> _cells;
     [Header("Animation Settings")]
     [SerializeField] private float _rotateDuration = 0.5f;
     [SerializeField] private float _scaleMultiplier = -1.2f;
@@ -49,15 +49,15 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         if (!_canMove || _isMoved)
             return;
 
-        _outline.gameObject.SetActive(true);
+        ToggleOutline(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!_canMove || _isMoved)
+        if (!_canMove)
             return;
 
-        _outline.gameObject.SetActive(false);
+        ToggleOutline(false);
     }
 
     #region >>> ITEMS
@@ -91,9 +91,7 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     private void RotateObject(GameObject obj, bool dir, Action OnComplete)
     {
-        _isMoved = true;
-        _outline.gameObject.SetActive(false);
-
+        _isMoved = true;       
         float angle = -90;
         if (dir)
             angle = -90;
@@ -113,11 +111,19 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         sequence.OnComplete(() =>
         {
             OnComplete?.Invoke();
-        }
-        );
+        });
     }
 
-   
+    #endregion
+    #region >>> OUTLINE
+
+    private void ToggleOutline(bool value)
+    {      
+        foreach (LevelBlockCell cell in _cells)
+        {
+            cell.ToggleOutline(value);
+        }
+    }
 
     #endregion
 }

@@ -2,6 +2,6 @@ using UnityEngine;
 
 public static class GlobalVars
 {
-    public static int LightRadius = 5;
+    public static int LightRadius = 3;
    
 }
