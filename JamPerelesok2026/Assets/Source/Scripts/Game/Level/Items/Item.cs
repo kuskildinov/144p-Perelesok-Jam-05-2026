@@ -8,22 +8,18 @@ public class Item : MonoBehaviour
     [Header("Indicator")]
     [SerializeField] private GameObject _targetIndeicator;
 
+    private ItemsRoot _root;
     private Collider _collider;
     private bool _isTaked = false;
   
     public ItemType Type => _type;
     public bool IsTaked => _isTaked;
 
-    public  virtual void Initialize()
+    public virtual void Initialize(ItemsRoot root)
     {
+        _root = root;
         _collider = GetComponent<Collider>();
         HideTargetIndicator();                
-    }
-
-    private void Start()
-    {
-        _collider = GetComponent<Collider>();
-        HideTargetIndicator();
     }
 
     #region >>> TARGET INDEICATOR

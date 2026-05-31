@@ -1,15 +1,21 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovment : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float _moveSpeed = 8f;
+    [Header("Reaction Settings")]
+    [SerializeField] private float _knockbackForce = 6f;
+    [SerializeField] private float _knockbackDuration = 0.2f;
 
     private Player _player;
     private PlayerInputHandler _inputHandler;
     private Vector3 _moveInput;
     private Vector3 _movement;
-    
+    private Vector3 _externalVelocity;
+    private bool _isKnockedBack = false;
+
     public void Initialize(Player player, PlayerInputHandler inputHandler)
     {
         _player = player;
@@ -29,8 +35,47 @@ public class PlayerMovment : MonoBehaviour
     #region >>> MOVE
 
     private void MoveHandler()
-    {        
-        _player.Controller.Move(_movement * _moveSpeed * Time.deltaTime);
+    {
+        Vector3 move = _movement * _moveSpeed;
+        if (_isKnockedBack)
+            move = Vector3.zero;
+
+        Vector3 finalMove = move + _externalVelocity;
+
+        _player.Controller.Move(finalMove * Time.deltaTime);
+    }
+
+    #endregion
+    #region >>> KNOCK BACK
+
+    public void KnockBack(Transform damageSource)
+    {
+        Vector3 direction = (transform.position - damageSource.position).normalized;
+        direction.y = 0f;
+
+        StartCoroutine(KnockbackRoutine(direction));
+    }
+
+    private IEnumerator KnockbackRoutine(Vector3 direction)
+    {
+        _isKnockedBack = true;
+
+        _externalVelocity = direction * _knockbackForce;
+
+        float t = 0f;
+
+        while (t < _knockbackDuration)
+        {
+            t += Time.deltaTime;
+
+            // плавное затухание
+            _externalVelocity = Vector3.Lerp(_externalVelocity, Vector3.zero, t / _knockbackDuration);
+
+            yield return null;
+        }
+
+        _externalVelocity = Vector3.zero;
+        _isKnockedBack = false;
     }
 
     #endregion

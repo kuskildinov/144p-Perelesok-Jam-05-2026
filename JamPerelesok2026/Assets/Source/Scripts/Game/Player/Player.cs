@@ -1,21 +1,29 @@
+using DG.Tweening;
 using System;
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController), typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerMovment _playerMovment;
     [SerializeField] private PlayerVisual _playerVisual;
     [SerializeField] private PlayerInteractions _playerInteractions;
     [SerializeField] private PlayerAttack _playerAttack;
-
+   
+   
     private CharacterController _characterController;
+    private Rigidbody _rb;
     private bool _isActive = true;
+    private bool _isAlive = true;
+  
+    private bool _isCanTakeDamage = true;
     private PlayerRoot _root;
     private PlayerInputHandler _inputHandler;
-    private LookDirection _currentLookDirection;
+    private LookDirection _currentLookDirection;   
 
     public bool IsActive => _isActive;
+    public bool IsCanTakeDamage => _isCanTakeDamage;   
     public CharacterController Controller => _characterController;
     public LookDirection CurrentLookDirection => _currentLookDirection;
 
@@ -26,7 +34,8 @@ public class Player : MonoBehaviour
         _root = root;
         _inputHandler = _root.InputHandler;
         _characterController = GetComponent<CharacterController>();
-        
+        _rb = GetComponent<Rigidbody>();
+       
         _playerMovment.Initialize(this, _inputHandler);
         _playerVisual.Initialize(this, _inputHandler);
         _playerInteractions.Initialize(this, _inputHandler);
@@ -92,6 +101,17 @@ public class Player : MonoBehaviour
         }
 
         LookDirectionChanged?.Invoke(_currentLookDirection);
+    }
+
+    #endregion
+    #region >>> TAKE DAMAGE
+
+    public void TakeDamage(Transform damageSource)
+    {
+        if (!_isAlive)
+            return;
+                     
+        _playerMovment.KnockBack(damageSource);
     }
 
     #endregion

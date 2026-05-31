@@ -121,6 +121,17 @@ public class PlayerInteractions : MonoBehaviour
             interactable.OnPlayerEnter();
             _currentInteractable = interactable;
         }
+
+        if(other.gameObject.TryGetComponent<AttackZone>(out AttackZone attackZone))
+        {
+            if(attackZone.Type == AttackZoneType.Enemy || attackZone.Type == AttackZoneType.Trap)
+            {
+                if (!_player.IsCanTakeDamage)
+                    return;
+
+                _player.TakeDamage(attackZone.DamagerCenter);
+            }
+        }
     }
 
     public void OnTriggerExit(Collider other)
