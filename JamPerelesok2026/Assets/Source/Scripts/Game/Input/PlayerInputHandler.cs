@@ -7,6 +7,7 @@ public class PlayerInputHandler : MonoBehaviour
     public event Action<Vector2> MoveInput;
     public event Action AttackInput;
     public event Action InteractInput;
+    public event Action ChangeStateInput;
 
    public void OnMove(InputValue value)
     {       
@@ -26,6 +27,14 @@ public class PlayerInputHandler : MonoBehaviour
         if (value.isPressed)
         {
             InteractInput?.Invoke();
+        }
+    }
+
+    public void OnChangeState(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            ChangeStateInput?.Invoke();
         }
     }
 }

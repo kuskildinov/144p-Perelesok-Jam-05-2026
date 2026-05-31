@@ -6,15 +6,17 @@ public class PlayerMovment : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float _moveSpeed = 8f;
     [Header("Reaction Settings")]
-    [SerializeField] private float _knockbackForce = 6f;
-    [SerializeField] private float _knockbackDuration = 0.2f;
+    [SerializeField] private float _knockbackForce = 8f;
+    [SerializeField] private float _knockbackDuration = 0.25f;
+    [SerializeField] private float _knockbackDrag = 10f;
 
     private Player _player;
     private PlayerInputHandler _inputHandler;
     private Vector3 _moveInput;
     private Vector3 _movement;
+
     private Vector3 _externalVelocity;
-    private bool _isKnockedBack = false;
+    private bool _isKnockedBack;
 
     public void Initialize(Player player, PlayerInputHandler inputHandler)
     {
@@ -37,8 +39,16 @@ public class PlayerMovment : MonoBehaviour
     private void MoveHandler()
     {
         Vector3 move = _movement * _moveSpeed;
+
         if (_isKnockedBack)
             move = Vector3.zero;
+
+        // плавное затухание knockback
+        _externalVelocity = Vector3.Lerp(
+            _externalVelocity,
+            Vector3.zero,
+            _knockbackDrag * Time.deltaTime
+        );
 
         Vector3 finalMove = move + _externalVelocity;
 
@@ -62,19 +72,8 @@ public class PlayerMovment : MonoBehaviour
 
         _externalVelocity = direction * _knockbackForce;
 
-        float t = 0f;
+        yield return new WaitForSeconds(_knockbackDuration);
 
-        while (t < _knockbackDuration)
-        {
-            t += Time.deltaTime;
-
-            // плавное затухание
-            _externalVelocity = Vector3.Lerp(_externalVelocity, Vector3.zero, t / _knockbackDuration);
-
-            yield return null;
-        }
-
-        _externalVelocity = Vector3.zero;
         _isKnockedBack = false;
     }
 

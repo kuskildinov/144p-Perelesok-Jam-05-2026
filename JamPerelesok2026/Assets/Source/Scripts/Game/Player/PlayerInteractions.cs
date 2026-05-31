@@ -122,9 +122,9 @@ public class PlayerInteractions : MonoBehaviour
             _currentInteractable = interactable;
         }
 
-        if(other.gameObject.TryGetComponent<AttackZone>(out AttackZone attackZone))
+        if (other.gameObject.TryGetComponent<AttackZone>(out AttackZone attackZone))
         {
-            if(attackZone.Type == AttackZoneType.Enemy || attackZone.Type == AttackZoneType.Trap)
+            if (attackZone.Type == AttackZoneType.Enemy || attackZone.Type == AttackZoneType.Trap)
             {
                 if (!_player.IsCanTakeDamage)
                     return;
@@ -132,8 +132,13 @@ public class PlayerInteractions : MonoBehaviour
                 _player.TakeDamage(attackZone.DamagerCenter);
             }
         }
-    }
 
+        if (other.gameObject.TryGetComponent<LevelBlock>(out LevelBlock levelBlock))
+        {
+            levelBlock.CanMove = false;
+        }
+    }
+    
     public void OnTriggerExit(Collider other)
     {
         if (other.gameObject.TryGetComponent<Item>(out Item item))
@@ -152,6 +157,11 @@ public class PlayerInteractions : MonoBehaviour
 
             interactable.OnPlayerExit();
             _currentInteractable = null;
+        }
+
+        if (other.gameObject.TryGetComponent<LevelBlock>(out LevelBlock levelBlock))
+        {
+            levelBlock.CanMove = true;
         }
     }
 }

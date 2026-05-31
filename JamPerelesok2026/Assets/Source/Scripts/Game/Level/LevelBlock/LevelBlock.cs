@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class LevelBlock : MonoBehaviour, IPointerClickHandler
+public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private bool _canMove = true;
     [SerializeField] private Transform _itemsContainer;
+    [SerializeField] private GameObject _outline;
     [Header("Animation Settings")]
     [SerializeField] private float _rotateDuration = 0.5f;
     [SerializeField] private float _scaleMultiplier = -1.2f;
@@ -15,7 +15,11 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler
 
     [SerializeField] private List<Item> _items = new List<Item>();
        
+    private bool _canMove = true;
+    private bool _isMoved = false;
     private Vector3 _originalScale;
+
+    public bool CanMove { get => _canMove; set => _canMove = value; }
 
     private void Start()
     {      
@@ -29,16 +33,33 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!_canMove)
+        if (!_canMove || _isMoved)
             return;
                
         RotateObject(gameObject,true,
             () =>
             {
-               
+                _isMoved = false;
             });
         RotateAllItems();
-    }   
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!_canMove || _isMoved)
+            return;
+
+        _outline.gameObject.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!_canMove || _isMoved)
+            return;
+
+        _outline.gameObject.SetActive(false);
+    }
+
     #region >>> ITEMS
     public void AddItem(Item item)
     {
@@ -70,6 +91,9 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler
 
     private void RotateObject(GameObject obj, bool dir, Action OnComplete)
     {
+        _isMoved = true;
+        _outline.gameObject.SetActive(false);
+
         float angle = -90;
         if (dir)
             angle = -90;
@@ -80,17 +104,10 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler
         Vector3 targetRotation = obj.transform.eulerAngles + new Vector3(0f, angle, 0f);
 
         Sequence sequence = DOTween.Sequence();
-
-        // 1. Увеличение (подъём)
-        //sequence.Append(obj.transform.DOScale(targetScale, _scaleDuration).SetEase(Ease.OutQuad));
-
-        // 2. Поворот
+       
         sequence.Append(obj.transform.DORotate(targetRotation, _rotateDuration, RotateMode.Fast)
             .SetEase(Ease.InOutQuad));
-
-        // 3. Возврат размера
-        //sequence.Append(obj.transform.DOScale(_originalScale, _scaleDuration).SetEase(Ease.InQuad));
-
+      
         sequence.Play();
 
         sequence.OnComplete(() =>
@@ -99,6 +116,8 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler
         }
         );
     }
+
+   
 
     #endregion
 }

@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     private LookDirection _currentLookDirection;   
 
     public bool IsActive => _isActive;
-    public bool IsCanTakeDamage => _isCanTakeDamage;   
+    public bool IsCanTakeDamage { get => _isCanTakeDamage; set => _isCanTakeDamage = value; }
     public CharacterController Controller => _characterController;
     public LookDirection CurrentLookDirection => _currentLookDirection;
 
@@ -44,6 +44,21 @@ public class Player : MonoBehaviour
         SubscribeToEvents();
     }
 
+    #region >>> MODE
+
+    public void OnPlayerModeChanged(PlayerMode mode)
+    {
+        if(mode == PlayerMode.Character)
+        {
+            ToggleActivation(true);
+        }
+        else if(mode == PlayerMode.Player)
+        {
+            ToggleActivation(false);
+        }
+    }
+
+    #endregion
     #region >>> ACTIVATION
 
     public void ToggleActivation(bool value)
@@ -110,7 +125,8 @@ public class Player : MonoBehaviour
     {
         if (!_isAlive)
             return;
-                     
+
+        _root.EmergancyChangeState();
         _playerMovment.KnockBack(damageSource);
     }
 

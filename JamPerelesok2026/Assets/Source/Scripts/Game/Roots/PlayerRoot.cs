@@ -3,15 +3,22 @@ using UnityEngine;
 public class PlayerRoot : CompositeRoot
 {
     private Player _player;
+    private PlayerModeHandler _playerModeHandler;
     private PlayerInputHandler _inputHandler;
+    private PlayerCameraHandler _cameraHandler;
 
     public Player Player => _player;
     public PlayerInputHandler InputHandler => _inputHandler;
+    public PlayerMode CurrentPlayerMode => _playerModeHandler.CurrentPlayerMode;
 
     public override void Compose()
     {
         InitializeInput();
         InitializePlayer();
+        InitializePlayerModeHandler();
+        InitializePlayerCameraHandler();
+
+        ChangeMouseVisibility(PlayerMode.Character);
     }
 
     #region >>> INPUT
@@ -36,6 +43,65 @@ public class PlayerRoot : CompositeRoot
             return;
         }
         _player.Initialzie(this);
+    }
+
+    #endregion
+    #region >>> MODE HANDLER
+
+    public void InitializePlayerModeHandler()
+    {
+        _playerModeHandler = FindAnyObjectByType<PlayerModeHandler>();
+        if (_playerModeHandler == null)
+        {
+            Debug.LogError("Error: Cant find PlayerModeHandler on scene!");
+            return;
+        }
+        _playerModeHandler.Initialize(this);
+    }
+
+    public void OnPlayerModeChanged(PlayerMode newMode)
+    {
+        _player.OnPlayerModeChanged(newMode);
+        _cameraHandler.OnPlayerModeChanged(newMode);
+
+        ChangeMouseVisibility(newMode);
+    }
+
+    public void EmergancyChangeState()
+    {
+        if(_playerModeHandler.CurrentPlayerMode == PlayerMode.Player)
+            _playerModeHandler.EmergancyChangeState();
+    }
+
+    #endregion
+    #region >>> CAMERA HANDLER
+
+    public void InitializePlayerCameraHandler()
+    {
+        _cameraHandler = FindAnyObjectByType<PlayerCameraHandler>();
+        if (_cameraHandler == null)
+        {
+            Debug.LogError("Error: Cant find PlayerModeHandler on scene!");
+            return;
+        }
+        _cameraHandler.Initialize();
+    }
+
+    #endregion
+    #region >>> MOUSE
+
+    private void ChangeMouseVisibility(PlayerMode newMode)
+    {
+        if(newMode == PlayerMode.Character)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else if (newMode == PlayerMode.Player)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     #endregion
