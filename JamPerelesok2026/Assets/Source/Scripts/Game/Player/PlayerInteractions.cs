@@ -26,23 +26,30 @@ public class PlayerInteractions : MonoBehaviour
         if (!_player.IsActive)
             return;
 
+        // Если есть Interactable для взаимодействия, только активируем его и выходим
         if(_currentInteractable != null)
         {
             _currentInteractable.TryInteract(_player, _currentTakedItem);
             return;
         }
         
-        if(_currentDetectedItem == null)           //если не нужно ничего подбирать
+        // Если мы не находимся у предмета
+        if(_currentDetectedItem == null)
         {
+            // Если в руке есть предмет - бросаем и выходим
             if (_currentTakedItem != null)
+            {
                 DropItem();
+            }
+            return;
         }
-        else                                       // если можно что то подобрать
+        // Если рядом есть предмет для подбирания
+        else
         {
-            if (_currentTakedItem != null)
-                DropItem();
-            
+            // Если в руке есть предмет - бросаем и берем предмет, который рядом
             TakeNewItem(_currentDetectedItem);
+            _currentDetectedItem.TryTake();
+            _currentDetectedItem = null;
         }       
     }
 
@@ -53,10 +60,8 @@ public class PlayerInteractions : MonoBehaviour
         if (_currentTakedItem != null)
             DropItem();
 
-        _currentTakedItem = item;
-        _currentDetectedItem.TryTake();
+        _currentTakedItem = item;       
         _player.OnItemTaked(_currentDetectedItem.Type);
-        _currentDetectedItem = null;
     }
 
     public void DropItem()
@@ -103,33 +108,35 @@ public class PlayerInteractions : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.TryGetComponent<Item>(out Item item))
-        {
-            if (item.IsTaked)
-                return;
-
-            item.ShowTargetIndicator();
-            _currentDetectedItem = item;
-        }
-
+    {       
         if(other.gameObject.TryGetComponent<Interactable>(out Interactable interactable))
-        {
-            if (!interactable.IsActive)
-                return;
-
+        {            
             interactable.OnPlayerEnter();
             _currentInteractable = interactable;
         }
 
         if (other.gameObject.TryGetComponent<AttackZone>(out AttackZone attackZone))
         {
-            if (attackZone.Type == AttackZoneType.Enemy || attackZone.Type == AttackZoneType.Trap)
-            {
-                if (!_player.IsCanTakeDamage)
-                    return;
+            if (!_player.IsCanTakeDamage)
+                return;
 
+            if (attackZone.Type == AttackZoneType.Enemy)
+            {
+                attackZone.Activate();
                 _player.TakeDamage(attackZone.DamagerCenter);
+            }
+
+            if (attackZone.Type == AttackZoneType.Trap)
+            {  
+                if(attackZone.TryGetComponent<TrapBlock>(out TrapBlock trap))
+                {
+                    if(trap.IsActive)
+                    {
+                        attackZone.Activate();
+                        _player.TakeDamage(attackZone.DamagerCenter);
+                    }
+                }
+               
             }
         }
 
@@ -151,10 +158,7 @@ public class PlayerInteractions : MonoBehaviour
         }
 
         if (other.gameObject.TryGetComponent<Interactable>(out Interactable interactable))
-        {
-            if (!interactable.IsActive)
-                return;
-
+        {           
             interactable.OnPlayerExit();
             _currentInteractable = null;
         }
@@ -162,6 +166,18 @@ public class PlayerInteractions : MonoBehaviour
         if (other.gameObject.TryGetComponent<LevelBlock>(out LevelBlock levelBlock))
         {
             levelBlock.CanMove = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<Item>(out Item item))
+        {
+            if (item.IsTaked)
+                return;
+
+            item.ShowTargetIndicator();
+            _currentDetectedItem = item;
         }
     }
 }

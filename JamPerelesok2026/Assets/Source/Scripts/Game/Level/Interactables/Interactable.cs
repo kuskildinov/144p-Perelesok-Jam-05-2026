@@ -29,17 +29,11 @@ public class Interactable : MonoBehaviour
 
     protected void ShowIndeicator()
     {
-        if (!_isActive)
-            return;
-
         _interactionIndicator.gameObject.SetActive(true);
     }
 
     protected void HideIndicator()
-    {
-        if (!_isActive)
-            return;
-
+    {       
         _interactionIndicator.gameObject.SetActive(false);
     }
 

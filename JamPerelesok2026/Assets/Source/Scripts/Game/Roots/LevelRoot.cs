@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class LevelRoot : CompositeRoot
 {
-    private LevelBlocksHandler _blocksHandler;   
+    private LevelBlocksHandler _blocksHandler;
+    private LevelTrapsHandler _trapsHandler;
     private PlayerInputHandler _inputHandler;
 
     public override void Compose()
@@ -10,7 +11,8 @@ public class LevelRoot : CompositeRoot
         _inputHandler = FindAnyObjectByType<PlayerInputHandler>();
 
         InitializeLevelBlocksHandler();
-        
+        InitializeLevelTrapsHandler();
+
     }
 
     #region >>> LEVEL BLOCKS
@@ -25,6 +27,21 @@ public class LevelRoot : CompositeRoot
         }
 
         _blocksHandler.Initialize(this, _inputHandler);
+    }
+
+    #endregion
+    #region >>> LEVEL TRAPS
+
+    private void InitializeLevelTrapsHandler()
+    {
+        _trapsHandler = FindAnyObjectByType<LevelTrapsHandler>();
+        if (_trapsHandler == null)
+        {
+            Debug.LogError("Error: Cant find LevelTrapsHandler on scene!");
+            return;
+        }
+
+        _trapsHandler.Initialize(this);
     }
 
     #endregion
