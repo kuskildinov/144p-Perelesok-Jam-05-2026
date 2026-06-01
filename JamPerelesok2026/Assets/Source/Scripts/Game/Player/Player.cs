@@ -8,9 +8,9 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerMovment _playerMovment;
     [SerializeField] private PlayerVisual _playerVisual;
+    [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private PlayerInteractions _playerInteractions;
     [SerializeField] private PlayerAttack _playerAttack;
-   
    
     private CharacterController _characterController;
     private Rigidbody _rb;
@@ -23,10 +23,12 @@ public class Player : MonoBehaviour
     private LookDirection _currentLookDirection;   
 
     public bool IsActive => _isActive;
+    public bool IsAlive => _isAlive;
     public bool IsCanTakeDamage { get => _isCanTakeDamage; set => _isCanTakeDamage = value; }
     public CharacterController Controller => _characterController;
     public LookDirection CurrentLookDirection => _currentLookDirection;
     public Item CurrentTakedItem => _playerInteractions.CurrentTakedItem;
+    public int CurrentHealth => _playerHealth.CurrentHealth;
 
     public event Action<LookDirection> LookDirectionChanged;
 
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
         _playerVisual.Initialize(this, _inputHandler);
         _playerInteractions.Initialize(this, _inputHandler);
         _playerAttack.Initialize(this, _inputHandler);
+        _playerHealth.Initialize(this);
 
         SubscribeToEvents();
     }
@@ -127,8 +130,14 @@ public class Player : MonoBehaviour
         if (!_isAlive)
             return;
 
-        _root.EmergancyChangeState();
         _playerMovment.KnockBack(damageSource);
+        _playerHealth.OnDamageTaked();
+        _root.OnPlayerTakeDamage();
+    }
+
+    public void OnPlayerDead()
+    {
+        _isAlive = false;
     }
 
     #endregion

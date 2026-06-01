@@ -33,6 +33,7 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("Pointer Click");
         if (!_canMove || _isMoved)
             return;
                
@@ -46,6 +47,7 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("Pointer Enter");
         if (!_canMove || _isMoved)
             return;
 

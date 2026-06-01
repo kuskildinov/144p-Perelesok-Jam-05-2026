@@ -6,6 +6,7 @@ public class PlayerRoot : CompositeRoot
     private PlayerModeHandler _playerModeHandler;
     private PlayerInputHandler _inputHandler;
     private PlayerCameraHandler _cameraHandler;
+    private PlayerUI _playerUI;
 
     public Player Player => _player;
     public PlayerInputHandler InputHandler => _inputHandler;
@@ -17,6 +18,7 @@ public class PlayerRoot : CompositeRoot
         InitializePlayer();
         InitializePlayerModeHandler();
         InitializePlayerCameraHandler();
+        InitializePlayerUI();
 
         ChangeMouseVisibility(PlayerMode.Character);
     }
@@ -43,6 +45,26 @@ public class PlayerRoot : CompositeRoot
             return;
         }
         _player.Initialzie(this);
+    }
+
+    public void OnPlayerTakeDamage()
+    {
+        EmergancyChangeState();
+        _playerUI.UpdateHeartCount();
+    }
+
+    #endregion
+    #region >>> PLAYER UI
+
+    private void InitializePlayerUI()
+    {
+        _playerUI = FindAnyObjectByType<PlayerUI>();
+        if (_playerUI == null)
+        {
+            Debug.LogError("Error: Cant find PlayerUI on scene!");
+            return;
+        }
+        _playerUI.Initialize(this);
     }
 
     #endregion
