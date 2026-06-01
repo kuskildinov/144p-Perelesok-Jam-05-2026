@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public bool IsCanTakeDamage { get => _isCanTakeDamage; set => _isCanTakeDamage = value; }
     public CharacterController Controller => _characterController;
     public LookDirection CurrentLookDirection => _currentLookDirection;
+    public Item CurrentTakedItem => _playerInteractions.CurrentTakedItem;
 
     public event Action<LookDirection> LookDirectionChanged;
 

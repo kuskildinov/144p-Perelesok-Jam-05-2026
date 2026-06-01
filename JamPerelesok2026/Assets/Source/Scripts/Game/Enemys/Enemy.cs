@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour
         if (!_isAlive)
             return;
 
-        CheckLighterDistance();
+        CheckLighterDistance();      
         CheckPlayerPosition();
         CheckAttackRange();
         WalkHandler();
@@ -107,7 +107,7 @@ public class Enemy : MonoBehaviour
         if (distance > GlobalVars.LightRadius + 1f)
         {
             Deactivate();
-        }
+        }      
     }
 
     private void CheckPlayerPosition()

@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 5373238025990904800}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6701026, y: -0.22574876, z: 0.22574876, w: 0.6701026}
-  m_LocalPosition: {x: 0, y: 0.79, z: 0.35}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 5010013619034596404}
   - component: {fileID: 8485970512429070378}
   - component: {fileID: 6257293813662353866}
+  - component: {fileID: 4413229955383944250}
   m_Layer: 0
   m_Name: Lighter
   m_TagString: Untagged
@@ -338,8 +339,23 @@ MonoBehaviour:
   _type: 0
   _visual: {fileID: 3147422056138200737}
   _targetIndeicator: {fileID: 3855803902299299722}
-  _lights:
-  - {fileID: 5373238025990904800}
+  _pointLightObject: {fileID: 5373238025990904800}
+  _pointLight: {fileID: 2039394235370531378}
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &4413229955383944250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789860848637865484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4ff28c495328e40b18ae945c208635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightAura
 --- !u!1001 &6101125643881320409
 PrefabInstance:
   m_ObjectHideFlags: 0
