@@ -7,51 +7,44 @@ using UnityEngine.EventSystems;
 public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Transform _itemsContainer;
+    [SerializeField] private Transform _enemysContainer;
     [SerializeField] private List<LevelBlockCell> _cells;
     [Header("Animation Settings")]
     [SerializeField] private float _rotateDuration = 0.5f;
-    [SerializeField] private float _scaleMultiplier = -1.2f;
-    [SerializeField] private float _scaleDuration = 0.15f;
+    [SerializeField] private float _raiseHeight = 1f;
+    [SerializeField] private float _raiseDuration = 0.2f;
+    [SerializeField] private float _lowerDuration = 0.2f;
 
     [SerializeField] private List<Item> _items = new List<Item>();
-       
+    [SerializeField] private List<Enemy> _enemys = new List<Enemy>();
+
+    private LevelBlocksHandler _blocksHandler;
     private bool _canMove = true;
     private bool _isMoved = false;
     private Vector3 _originalScale;
 
     public bool CanMove { get => _canMove; set => _canMove = value; }
-
-    private void Start()
-    {      
-        _originalScale = transform.localScale;        
-    }
-
-    public void Initialize()
+   
+    public void Initialize(LevelBlocksHandler blocksHandler)
     {
-
+        _blocksHandler = blocksHandler;
+        _originalScale = transform.localScale;
     }
-
+  
     public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log("Pointer Click");
+    {      
         if (!_canMove || _isMoved)
             return;
-               
-        RotateObject(gameObject,true,
-            () =>
-            {
-                _isMoved = false;
-            });
-        RotateAllItems();
+
+        _blocksHandler.SetCurrentBlock(this);      
     }
 
     public void OnPointerEnter(PointerEventData eventData)
-    {
-        Debug.Log("Pointer Enter");
+    {       
         if (!_canMove || _isMoved)
             return;
 
-        ToggleOutline(true);
+        ToggleOutline(true,true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -59,7 +52,7 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         if (!_canMove)
             return;
 
-        ToggleOutline(false);
+        ToggleOutline(true,false);
     }
 
     #region >>> ITEMS
@@ -80,34 +73,85 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         _items.Remove(item);
     }
 
-    private void RotateAllItems()
+    #endregion
+    #region >>> ENEMYS
+    public void AddEnemy(Enemy enemy)
     {
-        foreach (Item item in _items)
+        if (_enemys == null)
+            return;
+
+        _enemys.Add(enemy);
+        enemy.transform.SetParent(_enemysContainer);
+    }
+
+    public void RemoveEnemy(Enemy enemy)
+    {
+        if (_enemys == null || !_enemys.Contains(enemy))
+            return;
+
+        _enemys.Remove(enemy);
+    }
+
+    private void ActivateAllEnemys()
+    {
+        foreach (Enemy enemy in _enemys)
         {
-            RotateObject(item.gameObject, false, null);
+            enemy.Activate(null);
+            enemy.Agent.enabled = true;
         }
     }
 
+    private void DeactivateAllEnemys()
+    {
+        foreach (Enemy enemy in _enemys)
+        {
+            enemy.Deactivate();
+            enemy.Agent.enabled = false;
+        }
+    }
+   
     #endregion
     #region >>> ROTATION
 
+    public void RotateBlock(bool isLeft, Action onCompete)
+    {
+        DeactivateAllEnemys();
+
+        RotateObject(gameObject, isLeft,
+           () =>
+           {
+               _isMoved = false;
+               ActivateAllEnemys();
+
+               onCompete?.Invoke();
+           });
+    }
+
     private void RotateObject(GameObject obj, bool dir, Action OnComplete)
     {
-        _isMoved = true;       
+        _isMoved = true;
         float angle = -90;
         if (dir)
             angle = -90;
         else
-            angle = 0;
-
-        Vector3 targetScale = _originalScale * _scaleMultiplier;
+            angle = 90;
+              
         Vector3 targetRotation = obj.transform.eulerAngles + new Vector3(0f, angle, 0f);
+               
+        float originalY = obj.transform.position.y;
+        float raisedY = originalY + _raiseHeight;
 
         Sequence sequence = DOTween.Sequence();
-       
+               
+        sequence.Append(obj.transform.DOMoveY(raisedY, _raiseDuration)
+            .SetEase(Ease.OutQuad));
+                
         sequence.Append(obj.transform.DORotate(targetRotation, _rotateDuration, RotateMode.Fast)
             .SetEase(Ease.InOutQuad));
-      
+               
+        sequence.Append(obj.transform.DOMoveY(originalY, _lowerDuration)
+            .SetEase(Ease.InQuad));
+
         sequence.Play();
 
         sequence.OnComplete(() =>
@@ -119,11 +163,11 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     #endregion
     #region >>> OUTLINE
 
-    private void ToggleOutline(bool value)
+    public void ToggleOutline(bool isPointed, bool value)
     {      
         foreach (LevelBlockCell cell in _cells)
         {
-            cell.ToggleOutline(value);
+            cell.ToggleOutline(isPointed, value);
         }
     }
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -18,6 +19,9 @@ public class CharacterIllumination : MonoBehaviour
 
     [SerializeField] private float _lightHeight = 0.2f;
 
+    [SerializeField]
+    private float _darknessThreshold = 0.05f;
+
     private SpriteRenderer _renderer;
     private MaterialPropertyBlock _block;
 
@@ -25,6 +29,12 @@ public class CharacterIllumination : MonoBehaviour
 
     private float _currentIllumination;
     private float _targetIllumination;
+
+    public event Action EnteredDarkness;
+    public event Action ExitedDarkness;
+
+    private bool _isInDarkness;
+    public bool IsInDarkness => _targetIllumination <= _darknessThreshold;
 
     private void Awake()
     {
@@ -104,6 +114,23 @@ public class CharacterIllumination : MonoBehaviour
 
         _targetIllumination =
             Mathf.Clamp01(illumination);
+
+        UpdateDarknessState();
+    }
+
+    private void UpdateDarknessState()
+    {
+        bool isDark = _targetIllumination <= _darknessThreshold;
+
+        if (isDark == _isInDarkness)
+            return;
+
+        _isInDarkness = isDark;
+
+        if (_isInDarkness)
+            EnteredDarkness?.Invoke();
+        else
+            ExitedDarkness?.Invoke();
     }
 
 #if UNITY_EDITOR

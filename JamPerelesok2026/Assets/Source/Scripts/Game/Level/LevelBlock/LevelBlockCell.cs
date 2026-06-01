@@ -2,10 +2,33 @@ using UnityEngine;
 
 public class LevelBlockCell : MonoBehaviour
 {
-    [SerializeField] private GameObject _outline;
+    [SerializeField] private GameObject _pointedOutline;
+    [SerializeField] private GameObject _selectedOutline;
+    [SerializeField] private MeshRenderer _meshRenderer;
+    [SerializeField] private Material[] _materials;
 
-    public void ToggleOutline(bool value)
+    private void Start()
     {
-        _outline.gameObject.SetActive(value);
+        RandomizeMaterial();
+    }
+
+    public void ToggleOutline(bool isPointed,bool value)
+    {
+        if(isPointed)
+        {
+            _pointedOutline.gameObject.SetActive(value);
+        }
+        else
+        {
+            _selectedOutline.gameObject.SetActive(value);
+        }
+       
+    }
+
+    private void RandomizeMaterial()
+    {
+        int count = _materials.Length;
+        int random = Random.Range(0, count);
+        _meshRenderer.material = _materials[random];
     }
 }

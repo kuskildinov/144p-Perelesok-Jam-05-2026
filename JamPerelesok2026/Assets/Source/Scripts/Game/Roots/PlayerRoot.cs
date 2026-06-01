@@ -7,6 +7,7 @@ public class PlayerRoot : CompositeRoot
     private PlayerInputHandler _inputHandler;
     private PlayerCameraHandler _cameraHandler;
     private PlayerUI _playerUI;
+    private LevelRoot _levelRoot;
 
     public Player Player => _player;
     public PlayerInputHandler InputHandler => _inputHandler;
@@ -19,6 +20,8 @@ public class PlayerRoot : CompositeRoot
         InitializePlayerModeHandler();
         InitializePlayerCameraHandler();
         InitializePlayerUI();
+
+        _levelRoot = FindAnyObjectByType<LevelRoot>();
 
         ChangeMouseVisibility(PlayerMode.Character);
     }
@@ -85,6 +88,7 @@ public class PlayerRoot : CompositeRoot
     {
         _player.OnPlayerModeChanged(newMode);
         _cameraHandler.OnPlayerModeChanged(newMode);
+        _levelRoot.OnPlayerModeChanged(newMode);
 
         ChangeMouseVisibility(newMode);
     }

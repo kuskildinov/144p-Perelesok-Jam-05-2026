@@ -67,6 +67,22 @@ public class Item : MonoBehaviour
 
     #endregion
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.TryGetComponent<LevelBlock>(out LevelBlock block))
+        {
+            block.AddItem(this);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<LevelBlock>(out LevelBlock block))
+        {
+            block.RemoveItem(this);
+        }
+    }
+
 }
 
 public enum ItemType

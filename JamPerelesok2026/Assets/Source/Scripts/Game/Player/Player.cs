@@ -1,6 +1,4 @@
-using DG.Tweening;
 using System;
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController), typeof(Rigidbody))]
@@ -11,16 +9,21 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private PlayerInteractions _playerInteractions;
     [SerializeField] private PlayerAttack _playerAttack;
+    [Header("Darkness effects")]
+    [SerializeField] private CharacterIllumination _illumanation;
+    [SerializeField] private ParticleSystem _darkEffect;
+    [SerializeField] private float _timeToDamageInDarkness;
    
     private CharacterController _characterController;
     private Rigidbody _rb;
     private bool _isActive = true;
-    private bool _isAlive = true;
-  
+    private bool _isAlive = true;  
     private bool _isCanTakeDamage = true;
+    private bool _inDarkness = false;
     private PlayerRoot _root;
     private PlayerInputHandler _inputHandler;
-    private LookDirection _currentLookDirection;   
+    private LookDirection _currentLookDirection;
+    private float _darknessTimer;
 
     public bool IsActive => _isActive;
     public bool IsAlive => _isAlive;
@@ -44,8 +47,26 @@ public class Player : MonoBehaviour
         _playerInteractions.Initialize(this, _inputHandler);
         _playerAttack.Initialize(this, _inputHandler);
         _playerHealth.Initialize(this);
+        _darkEffect.Stop();
 
         SubscribeToEvents();
+    }
+
+    private void Update()
+    {
+        if (!_isAlive)
+            return;
+
+        if(_inDarkness)
+        {
+            _darknessTimer += Time.deltaTime;
+
+            if(_darknessTimer >= _timeToDamageInDarkness)
+            {
+                TakeDamage(transform);
+                _darknessTimer = 0f;
+            }
+        }
     }
 
     #region >>> MODE
@@ -141,16 +162,38 @@ public class Player : MonoBehaviour
     }
 
     #endregion
+    #region >>> IN DARKNESS BEHAVIOUR
+
+    private void OnEnterDarkness()
+    {
+        Debug.Log("б релмнре");
+        _darkEffect.Play();
+        _inDarkness = true;
+    }
+
+    private void OnExitDarkness()
+    {
+        Debug.Log("бшьек хг релмнрше!");
+        _darkEffect.Stop();
+        _inDarkness = false;
+        _darknessTimer = 0f;
+    }
+
+    #endregion
     #region >>> EVENTS
 
     private void SubscribeToEvents()
     {
         _inputHandler.MoveInput += OnMoveInputChanged;
+        _illumanation.EnteredDarkness += OnEnterDarkness;
+        _illumanation.ExitedDarkness += OnExitDarkness;
     }
 
     private void UnsubscriteFromEvents()
     {
         _inputHandler.MoveInput -= OnMoveInputChanged;
+        _illumanation.EnteredDarkness -= OnEnterDarkness;
+        _illumanation.ExitedDarkness -= OnExitDarkness;
     }
 
     private void OnMoveInputChanged(Vector2 moveInput)

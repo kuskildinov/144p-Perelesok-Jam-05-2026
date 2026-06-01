@@ -45,6 +45,7 @@ public class Enemy : MonoBehaviour
 
     public bool IsActive => _isActive;
     public bool IsAlive => _isAlive;
+    public NavMeshAgent Agent => _agent;
 
     public void Initialzie(EnemysRoot root)
     {
@@ -52,8 +53,11 @@ public class Enemy : MonoBehaviour
 
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        _agent.speed = _speed;
-        _agent.isStopped = true;
+        if(_agent != null && _agent.enabled)
+        {
+            _agent.speed = _speed;
+            _agent.isStopped = true;
+        }        
 
         _player = _root.TryGetPlayer();
 
@@ -83,7 +87,8 @@ public class Enemy : MonoBehaviour
             return;
 
         _isActive = true;
-        _currentDetectedLight = light;
+        if(light != null)
+            _currentDetectedLight = light;
     }
 
     public void Deactivate()
@@ -158,8 +163,11 @@ public class Enemy : MonoBehaviour
 
         _currentState = EnemyState.Idle;
 
-        _agent.isStopped = true;
-        _agent.ResetPath();
+        if (_agent != null && _agent.enabled)
+        {
+            _agent.isStopped = true;
+            _agent.ResetPath();
+        }
     }
 
     private void LosePlayer()
@@ -183,8 +191,11 @@ public class Enemy : MonoBehaviour
 
         _currentState = EnemyState.Walk;
 
-        _target = _player.transform;
-        _agent.isStopped = false;
+        if (_agent != null && _agent.enabled)
+        {
+            _target = _player.transform;
+            _agent.isStopped = false;
+        }
     }
 
     private void SetAttackState()
@@ -197,8 +208,11 @@ public class Enemy : MonoBehaviour
         _isAlive = false;
         _currentState = EnemyState.Dead;
 
-        _agent.isStopped = true;
-        _agent.ResetPath();
+        if (_agent != null && _agent.enabled)
+        {
+            _agent.isStopped = true;
+            _agent.ResetPath();
+        }            
     }
 
     private IEnumerator LosePlayerRoutine()
@@ -221,10 +235,13 @@ public class Enemy : MonoBehaviour
         if (_target == null)
             return;
 
-        if (!_agent.hasPath ||
-            Vector3.Distance(_agent.destination, _target.position) > 0.5f)
+        if (_agent != null && _agent.enabled)
         {
-            _agent.SetDestination(_target.position);
+            if (!_agent.hasPath ||
+            Vector3.Distance(_agent.destination, _target.position) > 0.5f)
+            {
+                _agent.SetDestination(_target.position);
+            }
         }
     }
 
@@ -269,10 +286,12 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(_timeBeforeAttack);
 
         SetAttackState();
-               
-        _agent.isStopped = true;
-        _agent.ResetPath();
-              
+
+        if (_agent != null && _agent.enabled)
+        {
+            _agent.isStopped = true;
+            _agent.ResetPath();
+        }
         yield return new WaitForSeconds(0.2f);
                
         LookDirection dir = GetDirectionToPlayer();
@@ -341,6 +360,24 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<LevelBlock>(out LevelBlock block))
+        {
+            block.AddEnemy(this);
+            Debug.Log("Enter to new Block");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<LevelBlock>(out LevelBlock block))
+        {
+            block.RemoveEnemy(this);
+            Debug.Log("Exit from Block");
+        }
+    }
 
     private void OnDrawGizmos()
     {
