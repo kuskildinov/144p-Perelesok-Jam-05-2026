@@ -33,4 +33,15 @@ public class LevelLever : Interactable
             _handle.localEulerAngles = new Vector3(_rotationValues.y, 0, 0 );
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<AttackZone>(out AttackZone zone))
+        {
+            if (zone.Type == AttackZoneType.Player)
+            {
+                TryInteract(null,null);            
+            }           
+        }
+    }
 }

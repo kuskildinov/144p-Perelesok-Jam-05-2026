@@ -5,6 +5,10 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
 public class Enemy : MonoBehaviour
 {
+    private const string AnimatorWalkParam = "Walk";
+    private const string AnimatorAttackTrigger = "Attack";
+    private const string AnimatorDeadParam = "Dead";
+
     [Header("Movement")]
     [SerializeField] private float _speed = 3.5f;
 
@@ -23,12 +27,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AttackZone _leftAttackZone;
     [SerializeField] private AttackZone _rightAttackZone;
 
+    [Header("Dead")]
+    [SerializeField] private float _deadDestroyDeley = 2f;
+
     private EnemysRoot _root;
     private NavMeshAgent _agent;
     private Player _player;
     private Transform _target;
     private Animator _animator;
-   
+
     private Coroutine _loseTargetCoroutine;
 
     protected bool _isActive;
@@ -168,6 +175,8 @@ public class Enemy : MonoBehaviour
             _agent.isStopped = true;
             _agent.ResetPath();
         }
+
+        PlayIdleAnimation();
     }
 
     private void LosePlayer()
@@ -196,11 +205,15 @@ public class Enemy : MonoBehaviour
             _target = _player.transform;
             _agent.isStopped = false;
         }
+
+        PlayWalkAnimation();
     }
 
     private void SetAttackState()
     {
         _currentState = EnemyState.Attack;
+
+        PlayAttackAnimation();
     }
 
     private void OnDead()
@@ -212,7 +225,10 @@ public class Enemy : MonoBehaviour
         {
             _agent.isStopped = true;
             _agent.ResetPath();
-        }            
+        }
+
+        PlayDeadAnimation();
+        StartCoroutine(DeadDestroyRoutine());
     }
 
     private IEnumerator LosePlayerRoutine()
@@ -222,6 +238,13 @@ public class Enemy : MonoBehaviour
         SetIdleState();
 
         _loseTargetCoroutine = null;
+    }
+
+    private IEnumerator DeadDestroyRoutine()
+    {
+        yield return new WaitForSecondsRealtime(_deadDestroyDeley);
+
+        this.gameObject.SetActive(false);
     }
 
     #endregion
@@ -360,6 +383,29 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion
+    #region >>> VISUAL
+
+    private void PlayIdleAnimation()
+    {
+        _animator.SetBool(AnimatorWalkParam, false);
+    }
+
+    private void PlayWalkAnimation()
+    {
+        _animator.SetBool(AnimatorWalkParam, true);
+    }
+
+    private void PlayAttackAnimation()
+    {
+        _animator.SetTrigger(AnimatorAttackTrigger);
+    }
+
+    private void PlayDeadAnimation()
+    {
+        _animator.SetBool(AnimatorDeadParam, true);
+    }
+
+    #endregion
 
     private void OnTriggerEnter(Collider other)
     {
@@ -367,6 +413,27 @@ public class Enemy : MonoBehaviour
         {
             block.AddEnemy(this);
             Debug.Log("Enter to new Block");
+        }
+
+        if(other.gameObject.TryGetComponent<AttackZone>(out AttackZone zone))
+        {
+            if(zone.Type == AttackZoneType.Player)
+            {
+                OnDead();
+            }
+
+            if (zone.Type == AttackZoneType.Trap)
+            {
+                if (zone.TryGetComponent<TrapBlock>(out TrapBlock trap))
+                {
+                    if (trap.IsActive)
+                    {
+                        zone.Activate();
+                        OnDead();
+                    }
+                }
+
+            }
         }
     }
 

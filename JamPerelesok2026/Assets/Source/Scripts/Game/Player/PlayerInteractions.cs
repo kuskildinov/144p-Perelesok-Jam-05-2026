@@ -108,13 +108,7 @@ public class PlayerInteractions : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {       
-        if(other.gameObject.TryGetComponent<Interactable>(out Interactable interactable))
-        {            
-            interactable.OnPlayerEnter();
-            _currentInteractable = interactable;
-        }
-
+    {
         if (other.gameObject.TryGetComponent<AttackZone>(out AttackZone attackZone))
         {
             if (!_player.IsCanTakeDamage)
@@ -138,6 +132,12 @@ public class PlayerInteractions : MonoBehaviour
                 }
                
             }
+        }
+
+        if (other.gameObject.TryGetComponent<Interactable>(out Interactable interactable))
+        {
+            interactable.OnPlayerEnter();
+            _currentInteractable = interactable;
         }
 
         if (other.gameObject.TryGetComponent<LevelBlock>(out LevelBlock levelBlock))
