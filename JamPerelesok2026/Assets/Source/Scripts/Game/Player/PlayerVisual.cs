@@ -59,6 +59,10 @@ public class PlayerVisual : MonoBehaviour
         {
             _animator.SetInteger(AnimatorItemParam, 2);
         }
+        else if(type == ItemType.Key)
+        {
+            _animator.SetInteger(AnimatorItemParam, 3);
+        }
     }
 
     public void OnItemDropped(ItemType type)
