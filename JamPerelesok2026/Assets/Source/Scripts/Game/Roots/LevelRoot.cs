@@ -1,20 +1,87 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelRoot : CompositeRoot
 {
+    [SerializeField] private string _nextLevelScene;
+    [SerializeField] private List<DialogPhrase> _startDialogs;
+
+    private BlackFade _blackFade;
+
     private LevelBlocksHandler _blocksHandler;
     private LevelTrapsHandler _trapsHandler;
+    private PlayerRoot _playeRoot;
     private PlayerInputHandler _inputHandler;
+    private StartDialogPanel _startDialogPanel;
 
     public override void Compose()
     {
-        _inputHandler = FindAnyObjectByType<PlayerInputHandler>();
+        //PauseGame();
+
+        _playeRoot = FindAnyObjectByType<PlayerRoot>();
+        _inputHandler = _playeRoot.InputHandler;
+        _blackFade = FindAnyObjectByType<BlackFade>();
 
         InitializeLevelBlocksHandler();
         InitializeLevelTrapsHandler();
+        InitializeStartDialogPanel();
 
+        TryShowStartPhrase();
     }
 
+    private void StartGame()
+    {
+        ResumeGame();
+
+        _blackFade.FadeIn();
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+    
+    private void ResumeGame()
+    {
+        Time.timeScale = 1f;
+    }
+
+    #region >>> LEVEL START PHRASE
+
+    private void InitializeStartDialogPanel()
+    {
+        _startDialogPanel = FindAnyObjectByType<StartDialogPanel>();
+        if (_startDialogPanel == null)
+        {
+            Debug.LogError("Error: Cant find StartDialogPanel on scene!");
+            return;
+        }
+
+        _startDialogPanel.Initialize(this, _inputHandler);
+    }
+
+    public void TryShowStartPhrase()
+    {
+        if (_startDialogs == null || _startDialogs.Count <= 0)
+        {
+            _startDialogPanel.Close();
+            StartGame();
+            return;
+        }
+
+        _startDialogPanel.Open();
+        _startDialogPanel.ShowTextsFromDialog(_startDialogs);
+    }
+
+    public void OnPhrasesComplete()
+    {
+        _startDialogPanel.Close();
+        StartGame();
+    }
+
+    #endregion
     #region >>> LEVEL BLOCKS
 
     private void InitializeLevelBlocksHandler()
@@ -42,6 +109,31 @@ public class LevelRoot : CompositeRoot
         }
 
         _trapsHandler.Initialize(this);
+    }
+
+    #endregion
+    #region >>> LEAVE LEVEL
+
+    public void TryLeaveLevel()
+    {
+        if (_playeRoot.Player.CurrentTakedItem.Type == ItemType.Light)
+        {
+            StartCoroutine(ChangeSceneRoutine());
+        }
+        else
+        {
+
+        }
+    }
+
+    private  IEnumerator ChangeSceneRoutine()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+
+        _blackFade.FadeOut(-1,() =>
+        {
+            SceneManager.LoadScene(_nextLevelScene);
+        });       
     }
 
     #endregion

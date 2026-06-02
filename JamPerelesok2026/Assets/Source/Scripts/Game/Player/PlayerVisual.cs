@@ -6,6 +6,7 @@ public class PlayerVisual : MonoBehaviour
     private const string AnimatorItemParam = "Item";
 
     [SerializeField] private Animator _animator;
+    [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private GameObject _lighterOnHand;
     [SerializeField] private Light _light;
 
@@ -28,6 +29,11 @@ public class PlayerVisual : MonoBehaviour
             return;
 
         WalkAnimationHandler();
+    }
+
+    private void ToggleRotation(bool isLeft)
+    {
+        _renderer.flipX = isLeft;
     }
 
     #region >>> ANIMATIONS
@@ -81,21 +87,36 @@ public class PlayerVisual : MonoBehaviour
     private void SubscribeToEvents()
     {
         _inputHandler.MoveInput += OnMoveInputChanged;
+        _player.LookDirectionChanged += OnLookDirectionChanged;
     }
 
     private void UnsubscriteFromEvents()
     {
         _inputHandler.MoveInput -= OnMoveInputChanged;
+        _player.LookDirectionChanged -= OnLookDirectionChanged;
     }
 
     private void OnMoveInputChanged(Vector2 moveInput)
     {       
         _movement = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
     }
+
+    private void OnLookDirectionChanged(LookDirection direction)
+    {
+        if (direction == LookDirection.Left)
+            ToggleRotation(true);
+        else if (direction == LookDirection.Right)
+            ToggleRotation(false);
+    }
     #endregion
 
     private void OnDestroy()
     {
         UnsubscriteFromEvents();
+    }
+
+    public void Reset()
+    {
+        _animator.SetBool(AnimatorWalkParam, false);
     }
 }

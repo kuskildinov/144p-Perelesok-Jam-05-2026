@@ -48,12 +48,18 @@ public class PlayerRoot : CompositeRoot
             return;
         }
         _player.Initialzie(this);
+        //ToggleActivation(false);
     }
 
     public void OnPlayerTakeDamage()
     {
         EmergancyChangeState();
         _playerUI.UpdateHeartCount();
+    }
+
+    public void ToggleActivation(bool value)
+    {
+        _player.ToggleActivation(value);
     }
 
     #endregion

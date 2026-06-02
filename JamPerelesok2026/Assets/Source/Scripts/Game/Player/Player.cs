@@ -81,6 +81,8 @@ public class Player : MonoBehaviour
         {
             ToggleActivation(false);
         }
+
+        _playerVisual.Reset();
     }
 
     #endregion

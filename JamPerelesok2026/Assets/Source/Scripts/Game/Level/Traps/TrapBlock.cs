@@ -55,7 +55,7 @@ public class TrapBlock : MonoBehaviour
 
         sequence.OnComplete(() =>
         {
-            Debug.Log("Ўипы вернулись в исходное положение");
+          
         });
 
         sequence.Play();
