@@ -48,7 +48,7 @@ public class PlayerRoot : CompositeRoot
             return;
         }
         _player.Initialzie(this);
-        //ToggleActivation(false);
+        ToggleActivation(false);
     }
 
     public void OnPlayerTakeDamage()

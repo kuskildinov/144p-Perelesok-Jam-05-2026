@@ -15,11 +15,10 @@ public class LevelRoot : CompositeRoot
     private PlayerRoot _playeRoot;
     private PlayerInputHandler _inputHandler;
     private StartDialogPanel _startDialogPanel;
+    private CommentsDialogPanel _commentsDialogPanel;
 
     public override void Compose()
     {
-        //PauseGame();
-
         _playeRoot = FindAnyObjectByType<PlayerRoot>();
         _inputHandler = _playeRoot.InputHandler;
         _blackFade = FindAnyObjectByType<BlackFade>();
@@ -27,6 +26,7 @@ public class LevelRoot : CompositeRoot
         InitializeLevelBlocksHandler();
         InitializeLevelTrapsHandler();
         InitializeStartDialogPanel();
+        InitializeCommentsDialogPanel();
 
         TryShowStartPhrase();
     }
@@ -36,6 +36,7 @@ public class LevelRoot : CompositeRoot
         ResumeGame();
 
         _blackFade.FadeIn();
+        _playeRoot.ToggleActivation(true);
     }
 
     private void PauseGame()
@@ -79,6 +80,31 @@ public class LevelRoot : CompositeRoot
     {
         _startDialogPanel.Close();
         StartGame();
+    }
+
+    #endregion
+    #region >>> LEVEL COMMENTS DIALOGS
+
+    private void InitializeCommentsDialogPanel()
+    {
+        _commentsDialogPanel = FindAnyObjectByType<CommentsDialogPanel>();
+        if (_commentsDialogPanel == null)
+        {
+            Debug.LogError("Error: Cant find CommentsDialogPanel on scene!");
+            return;
+        }
+
+        _commentsDialogPanel.Initialize(this, _inputHandler);
+    }
+
+    public void ShowCommentDialog(DialogPhrase phrase)
+    {
+        _commentsDialogPanel.Open(phrase);
+    }
+
+    public void OnCommentDialogComplete()
+    {
+        _commentsDialogPanel.Close();
     }
 
     #endregion
