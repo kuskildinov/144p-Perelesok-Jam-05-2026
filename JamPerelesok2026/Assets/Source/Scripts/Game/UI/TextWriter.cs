@@ -24,8 +24,7 @@ public class TextWriter : MonoBehaviour
     public void ChangeTextAndTyping(DialogPhrase dialog)
     {
         _fullText = dialog.Phrase;
-        _text.color = dialog.Color;
-        Debug.Log(_fullText);
+        _text.color = dialog.Color;      
         StartTyping();
     }
 

@@ -5,8 +5,14 @@ public class Interactable : MonoBehaviour
     [SerializeField] protected GameObject _interactionIndicator;
 
     protected bool _isActive = true;
+    protected LevelRoot _root;
 
     public bool IsActive => _isActive;
+
+    public void Initialize(LevelRoot root)
+    {
+        _root = root;
+    }
 
     #region >>> PLAYER INTERACTION
     public virtual void OnPlayerEnter()

@@ -12,6 +12,7 @@ public class LevelRoot : CompositeRoot
 
     private LevelBlocksHandler _blocksHandler;
     private LevelTrapsHandler _trapsHandler;
+    private LevelInteractablesHandler _interactablesHandler;
     private PlayerRoot _playeRoot;
     private PlayerInputHandler _inputHandler;
     private StartDialogPanel _startDialogPanel;
@@ -25,6 +26,7 @@ public class LevelRoot : CompositeRoot
 
         InitializeLevelBlocksHandler();
         InitializeLevelTrapsHandler();
+        InitializeLevelInteractablesHandler();
         InitializeStartDialogPanel();
         InitializeCommentsDialogPanel();
 
@@ -97,7 +99,7 @@ public class LevelRoot : CompositeRoot
         _commentsDialogPanel.Initialize(this, _inputHandler);
     }
 
-    public void ShowCommentDialog(DialogPhrase phrase)
+    public void TryShowCommentDialog(DialogPhrase phrase)
     {
         _commentsDialogPanel.Open(phrase);
     }
@@ -135,6 +137,21 @@ public class LevelRoot : CompositeRoot
         }
 
         _trapsHandler.Initialize(this);
+    }
+
+    #endregion
+    #region >>> INTERACTABLES
+
+    private void InitializeLevelInteractablesHandler()
+    {
+        _interactablesHandler = FindAnyObjectByType<LevelInteractablesHandler>();
+        if (_interactablesHandler == null)
+        {
+            Debug.LogError("Error: Cant find LevelInteractablesHandler on scene!");
+            return;
+        }
+
+        _interactablesHandler.Initialize(this);
     }
 
     #endregion
