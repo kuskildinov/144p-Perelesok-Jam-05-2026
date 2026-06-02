@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
 {
-    [SerializeField] private GameObject _keyView;
-    [SerializeField] private GameObject _swordView;
-    [SerializeField] private GameObject _lightView;
+    private const string AnimatorWalkParam = "Walk";
+
+    [SerializeField] private Animator _animator;
+    [SerializeField] private GameObject _lighterOnHand;
     [SerializeField] private Light _light;
 
     private Player _player;
@@ -20,46 +21,45 @@ public class PlayerVisual : MonoBehaviour
         SubscribeToEvents();
     }
 
+    private void Update()
+    {
+        if (!_player.IsAlive)
+            return;
+
+        WalkAnimationHandler();
+    }
+
+    #region >>> ANIMATIONS
+
+    private void WalkAnimationHandler()
+    {
+        if(_movement.sqrMagnitude > 0)
+        {
+            _animator.SetBool(AnimatorWalkParam, true);
+        }
+        else
+        {
+            _animator.SetBool(AnimatorWalkParam, false);
+        }
+    }
+
+    #endregion
     #region >>> ITEM VIEW
 
     public void OnItemTaked(ItemType type)
     {
-        ToggleItemViewByType(type, true);
+       if(type == ItemType.Light)
+        {
+            _lighterOnHand.gameObject.SetActive(true);
+        }
     }
 
     public void OnItemDropped(ItemType type)
     {
-        ToggleItemViewByType(type, false);
-    }
-
-    private void ToggleItemViewByType(ItemType type, bool value)
-    {
-        if (_currentShowedView != null)
+        if (type == ItemType.Light)
         {
-            _currentShowedView.gameObject.SetActive(false);
-            _currentShowedView = null;
+            _lighterOnHand.gameObject.SetActive(false);
         }
-
-        switch(type)
-        {
-            case ItemType.Light:
-                {
-                    _currentShowedView = _lightView;
-                    break;
-                }
-            case ItemType.Key:
-                {
-                    _currentShowedView = _keyView;
-                    break;
-                }
-            case ItemType.Sword:
-                {
-                    _currentShowedView = _swordView;
-                    break;
-                }
-        }
-
-        _currentShowedView.gameObject.SetActive(value);
     }
 
     #endregion

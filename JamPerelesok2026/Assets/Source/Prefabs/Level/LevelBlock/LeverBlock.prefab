@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1975840653210636377}
   - component: {fileID: 7940416039722584440}
   - component: {fileID: 4868149381440291745}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: LeverBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,6 +170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6752559079861241281}
+  - component: {fileID: 3874845071059868919}
   m_Layer: 0
   m_Name: mesh
   m_TagString: Untagged
@@ -194,6 +195,27 @@ Transform:
   - {fileID: 6306426564439210995}
   m_Father: {fileID: 1975840653210636377}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
+--- !u!65 &3874845071059868919
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6268509408239001467}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.35667098, y: 0.3, z: 0.54216194}
+  m_Center: {x: 0.005790298, y: 2.057127e-17, z: 0.16108105}
 --- !u!1 &8345074555752664718
 GameObject:
   m_ObjectHideFlags: 0

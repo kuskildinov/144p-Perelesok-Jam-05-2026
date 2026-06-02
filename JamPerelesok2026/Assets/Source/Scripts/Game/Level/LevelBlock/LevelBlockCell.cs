@@ -4,10 +4,10 @@ public class LevelBlockCell : MonoBehaviour
 {
     [SerializeField] private GameObject _pointedOutline;
     [SerializeField] private GameObject _selectedOutline;
-    [SerializeField] private MeshRenderer _meshRenderer;
+    [SerializeField] protected MeshRenderer _meshRenderer;
     [SerializeField] private Material[] _materials;
 
-    private void Start()
+    public virtual void Start()
     {
         RandomizeMaterial();
     }

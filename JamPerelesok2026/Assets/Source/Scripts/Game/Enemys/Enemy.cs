@@ -411,8 +411,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<LevelBlock>(out LevelBlock block))
         {
-            block.AddEnemy(this);
-            Debug.Log("Enter to new Block");
+            block.AddEnemy(this);          
         }
 
         if(other.gameObject.TryGetComponent<AttackZone>(out AttackZone zone))

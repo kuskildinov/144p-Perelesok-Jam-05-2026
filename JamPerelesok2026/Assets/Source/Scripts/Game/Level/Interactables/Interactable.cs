@@ -9,12 +9,12 @@ public class Interactable : MonoBehaviour
     public bool IsActive => _isActive;
 
     #region >>> PLAYER INTERACTION
-    public void OnPlayerEnter()
+    public virtual void OnPlayerEnter()
    {
         ShowIndeicator();
-   }
+    }
 
-    public void OnPlayerExit()
+    public virtual void OnPlayerExit()
     {
         HideIndicator();
     }

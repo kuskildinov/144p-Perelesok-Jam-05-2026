@@ -1,9 +1,33 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class Door : Interactable
 {
-    [SerializeField] private GameObject _doorVisual;
+    private const string AnimatorOpenParam = "Open";
 
+    [SerializeField] private Collider _doorCollider;
+    [SerializeField] private Animator _animator;
+
+    private bool _isOpen = false;
+
+    #region >>> PLAYER INTERACTION
+    public override void OnPlayerEnter()
+    {
+        if (_isOpen)
+            return;
+
+        base.OnPlayerEnter();
+    }
+
+    public override void OnPlayerExit()
+    {
+        if (_isOpen)
+            return;
+
+        base.OnPlayerExit();
+    }
+    #endregion
+    #region >>> INTERACT
     public override void TryInteract(Player player, Item item)
     {       
         if (item == null || item.Type != ItemType.Key)
@@ -13,13 +37,19 @@ public class Door : Interactable
 
         Open();
     }
+    #endregion
 
     private void Open()
-    {       
-        HideIndicator();
-        _isActive = false;
+    {
+        _isOpen = true;
+        _doorCollider.enabled = false;
 
-        //Анимация открытия
-        _doorVisual.gameObject.SetActive(false);
+        HideIndicator();
+        PlayOpenAnimation();
+    }
+
+    private void PlayOpenAnimation()
+    {
+        _animator.SetBool(AnimatorOpenParam, true);
     }
 }

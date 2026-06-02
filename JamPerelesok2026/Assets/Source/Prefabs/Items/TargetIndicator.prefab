@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8869562403255976581}
   - component: {fileID: 7951401341822653876}
+  - component: {fileID: 7666142278719733345}
   - component: {fileID: 5654287873547799651}
   m_Layer: 0
   m_Name: TargetIndicator
@@ -170,6 +171,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookAtCamComponent
   _spriteTransform: {fileID: 1982617992015003660}
+--- !u!114 &7666142278719733345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7001158203326058579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0084f9d0713ee94a9b8780717d0b65e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteDepthSorter
+  _sortingOffset: 0
+  _renderer: {fileID: 4692814005648145044}
 --- !u!95 &5654287873547799651
 Animator:
   serializedVersion: 7

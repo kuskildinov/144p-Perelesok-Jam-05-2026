@@ -97,8 +97,8 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _FadePower: 1.51
-    - _FadeRadius: 0.392
+    - _FadePower: 2.5
+    - _FadeRadius: 0.55
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
