@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerVisual : MonoBehaviour
 {
     private const string AnimatorWalkParam = "Walk";
+    private const string AnimatorItemParam = "Item";
 
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject _lighterOnHand;
@@ -48,18 +49,26 @@ public class PlayerVisual : MonoBehaviour
 
     public void OnItemTaked(ItemType type)
     {
-       if(type == ItemType.Light)
+        _animator.SetInteger(AnimatorItemParam, 0);
+        if (type == ItemType.Light)
         {
             _lighterOnHand.gameObject.SetActive(true);
+            _animator.SetInteger(AnimatorItemParam, 1);
+        }
+        else if (type == ItemType.Sword)
+        {
+            _animator.SetInteger(AnimatorItemParam, 2);
         }
     }
 
     public void OnItemDropped(ItemType type)
     {
+        _animator.SetInteger(AnimatorItemParam, 0);
         if (type == ItemType.Light)
         {
             _lighterOnHand.gameObject.SetActive(false);
         }
+       
     }
 
     #endregion

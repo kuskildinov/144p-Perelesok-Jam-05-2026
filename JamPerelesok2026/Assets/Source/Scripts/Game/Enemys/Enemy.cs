@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _speed = 3.5f;
 
     [Header("Detection")]
+    [SerializeField] private CharacterIllumination _illumanation;
     [SerializeField] private float _maxDistance = 10f;
     [SerializeField] private float _eyeHeight = 1.5f;
     [SerializeField] private float _loseTargetDelay = 2f;
@@ -73,6 +74,8 @@ public class Enemy : MonoBehaviour
         _canSeePlayer = false;
 
         _currentState = EnemyState.Idle;
+
+        SubscribeToEvents();
     }
 
     private void Update()
@@ -80,8 +83,8 @@ public class Enemy : MonoBehaviour
         if (!_isAlive)
             return;
 
-        CheckLighterDistance();      
-        CheckPlayerPosition();
+        //CheckLighterDistance();      
+       // CheckPlayerPosition();
         CheckAttackRange();
         WalkHandler();
     }
@@ -406,6 +409,36 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion
+    #region >>> IN DARKNESS BEHAVIOUR
+
+    private void OnEnterDarkness()
+    {        
+        _isActive = false;
+        LosePlayer();
+    }
+
+    private void OnExitDarkness()
+    {       
+        _isActive = true;
+        SetWalkState();
+    }
+
+    #endregion
+    #region >>> EVENTS
+
+    private void SubscribeToEvents()
+    {
+        _illumanation.EnteredDarkness += OnEnterDarkness;
+        _illumanation.ExitedDarkness += OnExitDarkness;
+    }
+
+    private void UnsubscribeToEvents()
+    {
+        _illumanation.EnteredDarkness -= OnEnterDarkness;
+        _illumanation.ExitedDarkness -= OnExitDarkness;
+    }
+
+    #endregion
 
     private void OnTriggerEnter(Collider other)
     {
@@ -458,6 +491,11 @@ public class Enemy : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _maxDistance);
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeToEvents();
     }
 }
 
