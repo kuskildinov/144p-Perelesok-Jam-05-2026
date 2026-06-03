@@ -66,6 +66,9 @@ public class PlayerInteractions : MonoBehaviour
 
     public void DropItem()
     {
+        if (_currentTakedItem == null)
+            return;
+
         _player.OnItemDropped(_currentTakedItem.Type);
         _currentTakedItem.TryDrop(this.transform);
         _currentTakedItem = null;

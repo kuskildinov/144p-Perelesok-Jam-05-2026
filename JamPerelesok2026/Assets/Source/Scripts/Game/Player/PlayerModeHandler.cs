@@ -19,6 +19,9 @@ public class PlayerModeHandler : MonoBehaviour
 
     private void TryChangeState()
     {
+        if (!_root.Player.IsAlive)
+            return;
+
         if (_currentPlayerMode == PlayerMode.Character)
             _currentPlayerMode = PlayerMode.Player;
         else if (_currentPlayerMode == PlayerMode.Player)

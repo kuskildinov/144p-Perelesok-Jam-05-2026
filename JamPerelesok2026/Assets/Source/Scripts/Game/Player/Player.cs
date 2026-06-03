@@ -90,7 +90,10 @@ public class Player : MonoBehaviour
 
     public void ToggleActivation(bool value)
     {
-        _isActive = value;
+        if (_root.CurrentPlayerMode == PlayerMode.Player)
+            _isActive = false;
+        else
+            _isActive = value;
     }
 
     #endregion
@@ -154,13 +157,19 @@ public class Player : MonoBehaviour
             return;
 
         _playerMovment.KnockBack(damageSource);
-        _playerHealth.OnDamageTaked();
+        _playerHealth.OnTakeDamage();
+        _playerVisual.OnTakeDamage();
         _root.OnPlayerTakeDamage();
     }
 
     public void OnPlayerDead()
     {
-        _isAlive = false;
+        _playerInteractions.DropItem();
+
+         _isAlive = false;
+        _isActive = false;      
+        _playerVisual.PlayDeadAnimation();
+        _root.OnPlayerDead();
     }
 
     #endregion

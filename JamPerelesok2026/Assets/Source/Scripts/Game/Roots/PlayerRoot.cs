@@ -16,9 +16,9 @@ public class PlayerRoot : CompositeRoot
     public override void Compose()
     {
         InitializeInput();
-        InitializePlayer();
         InitializePlayerModeHandler();
         InitializePlayerCameraHandler();
+        InitializePlayer();
         InitializePlayerUI();
 
         _levelRoot = FindAnyObjectByType<LevelRoot>();
@@ -60,6 +60,11 @@ public class PlayerRoot : CompositeRoot
     public void ToggleActivation(bool value)
     {
         _player.ToggleActivation(value);
+    }
+
+    public void OnPlayerDead()
+    {
+        Debug.Log("Dead");
     }
 
     #endregion

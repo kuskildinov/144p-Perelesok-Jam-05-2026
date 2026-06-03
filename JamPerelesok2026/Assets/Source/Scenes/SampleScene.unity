@@ -1002,11 +1002,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 948033919879225447, guid: 10bc8d0b587783d4c8f0c70c2031b563, type: 3}
   m_PrefabInstance: {fileID: 571742803}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &575846217 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 1623068925029470261, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
-  m_PrefabInstance: {fileID: 7262099277056906627}
-  m_PrefabAsset: {fileID: 0}
 --- !u!212 &586810151 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 421354527457752209, guid: d5c135d4c5253a4468c09a1f976a445a, type: 3}
@@ -3028,15 +3023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelRoot
   _nextLevelScene: 
-  _startDialogs:
-  - Phrase: "\u042F \u043F\u043E\u043D\u0438\u043C\u0430\u044E \u0442\u0432\u043E\u0439
-      \u0432\u044B\u0431\u043E\u0440, \u043E\u043D\u0438 \u043F\u0435\u0440\u0435\u0448\u043B\u0438
-      \u0433\u0440\u0430\u043D\u044C."
-    Color: {r: 1, g: 0, b: 0, a: 1}
-  - Phrase: "\u0410\u0441\u043A\u0430\u0440 \u041F\u0438\u0441\u044F"
-    Color: {r: 1, g: 1, b: 1, a: 1}
-  - Phrase: "\u041D\u0435\u0442, \u0410\u0441\u043A\u0430\u0440 \u0421\u0438\u0441\u044F"
-    Color: {r: 1, g: 0, b: 0, a: 1}
+  _startDialogs: []
 --- !u!1001 &1923171587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3625,6 +3612,7 @@ PrefabInstance:
     - {fileID: 6313163195665674506, guid: 10bc8d0b587783d4c8f0c70c2031b563, type: 3}
     - {fileID: 7452377115664623153, guid: 10bc8d0b587783d4c8f0c70c2031b563, type: 3}
     - {fileID: 8663876409973046795, guid: 10bc8d0b587783d4c8f0c70c2031b563, type: 3}
+    - {fileID: 6862424523468920235, guid: 10bc8d0b587783d4c8f0c70c2031b563, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 948033919879225447, guid: 10bc8d0b587783d4c8f0c70c2031b563, type: 3}
       insertIndex: -1
@@ -4250,30 +4238,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 738499330525275422, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
-      propertyPath: _timeToDamageInDarkness
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1650265302642923625, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3439898735223163156, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4309033759741985019, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4683113509593499327, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.704
-      objectReference: {fileID: 0}
-    - target: {fileID: 4905533993495985146, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
-      propertyPath: _renderer
-      value: 
-      objectReference: {fileID: 575846217}
     - target: {fileID: 7763501319997115048, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.021

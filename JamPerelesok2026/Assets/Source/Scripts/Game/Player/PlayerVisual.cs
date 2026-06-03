@@ -4,6 +4,9 @@ public class PlayerVisual : MonoBehaviour
 {
     private const string AnimatorWalkParam = "Walk";
     private const string AnimatorItemParam = "Item";
+    private const string AnimatorAttackTrigger = "Attack";
+    private const string AnimatorTakeDamageTrigger = "TakeDamage";
+    private const string AnimatorDeadParam = "Dead";
 
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _renderer;
@@ -13,7 +16,6 @@ public class PlayerVisual : MonoBehaviour
     private Player _player;
     private PlayerInputHandler _inputHandler;  
     private Vector3 _movement;
-    private GameObject _currentShowedView;
 
     public void Initialize(Player player, PlayerInputHandler inputHandler)
     {
@@ -27,6 +29,11 @@ public class PlayerVisual : MonoBehaviour
     {
         if (!_player.IsAlive)
             return;
+
+        if(!_player.IsActive)
+        {
+            PlayIdleAnimation();
+        }
 
         WalkAnimationHandler();
     }
@@ -42,12 +49,36 @@ public class PlayerVisual : MonoBehaviour
     {
         if(_movement.sqrMagnitude > 0)
         {
-            _animator.SetBool(AnimatorWalkParam, true);
+            PlayWalkAnimation();
         }
         else
         {
-            _animator.SetBool(AnimatorWalkParam, false);
+            PlayIdleAnimation();
         }
+    }
+
+    private void PlayWalkAnimation()
+    {
+        _animator.SetBool(AnimatorWalkParam, true);
+    }
+
+    private void PlayIdleAnimation()
+    {
+        _animator.SetBool(AnimatorWalkParam, false);
+    }
+    private void PlayAttackAnimation()
+    {
+        _animator.SetTrigger(AnimatorAttackTrigger);
+    }
+
+    private void PlayTakeDamageAnimation()
+    {
+        _animator.SetTrigger(AnimatorTakeDamageTrigger);
+    }
+
+    public void PlayDeadAnimation()
+    {
+        _animator.SetBool(AnimatorDeadParam, true);
     }
 
     #endregion
@@ -87,12 +118,14 @@ public class PlayerVisual : MonoBehaviour
     private void SubscribeToEvents()
     {
         _inputHandler.MoveInput += OnMoveInputChanged;
+        _inputHandler.AttackInput += OnAttackInputChanged;
         _player.LookDirectionChanged += OnLookDirectionChanged;
     }
 
     private void UnsubscriteFromEvents()
     {
         _inputHandler.MoveInput -= OnMoveInputChanged;
+        _inputHandler.AttackInput -= OnAttackInputChanged;
         _player.LookDirectionChanged -= OnLookDirectionChanged;
     }
 
@@ -103,11 +136,30 @@ public class PlayerVisual : MonoBehaviour
 
     private void OnLookDirectionChanged(LookDirection direction)
     {
+        if (!_player.IsAlive)
+            return;
+
         if (direction == LookDirection.Left)
             ToggleRotation(true);
         else if (direction == LookDirection.Right)
             ToggleRotation(false);
     }
+
+    private void OnAttackInputChanged()
+    {
+        if (_player == null)
+            return;
+
+        if(_player.CurrentTakedItem != null && _player.CurrentTakedItem.Type == ItemType.Sword)
+            PlayAttackAnimation();
+    }
+
+    public void OnTakeDamage()
+    {        
+        PlayTakeDamageAnimation();
+    }
+
+   
     #endregion
 
     private void OnDestroy()

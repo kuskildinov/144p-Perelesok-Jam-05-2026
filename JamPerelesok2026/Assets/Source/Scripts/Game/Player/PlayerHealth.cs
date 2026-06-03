@@ -25,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
             return false;
     }
 
-    public void OnDamageTaked()
+    public void OnTakeDamage()
     {
         if (!_player.IsAlive)
             return;
