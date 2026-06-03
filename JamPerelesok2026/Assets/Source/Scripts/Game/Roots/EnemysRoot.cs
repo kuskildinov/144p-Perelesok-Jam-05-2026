@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemysRoot : CompositeRoot
 {
     private PlayerRoot _playerRoot;
+    private List<Enemy> _currentEnemys = new List<Enemy>();
 
     public override void Compose()
     {
@@ -18,6 +20,7 @@ public class EnemysRoot : CompositeRoot
         foreach (Enemy enemy in enemys)
         {
             enemy.Initialzie(this);
+            _currentEnemys.Add(enemy);
         }
     }
 

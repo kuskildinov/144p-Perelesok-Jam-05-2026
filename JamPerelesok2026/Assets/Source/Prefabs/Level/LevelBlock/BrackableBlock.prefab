@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 1811413304467831527}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.508, z: 0.0055}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0.508, z: -0.01}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.05380278}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4852544505525639711}
@@ -117,8 +117,8 @@ Transform:
   m_GameObject: {fileID: 1843484594301189515}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.533, z: 0.0055}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0.533, z: -0.01}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.05380278}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4852544505525639711}
@@ -209,8 +209,8 @@ Transform:
   m_GameObject: {fileID: 1860366140912228833}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0072}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3209929167390899202}
@@ -5418,6 +5418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4852544505525639711}
   - component: {fileID: 7635388318596501822}
+  - component: {fileID: 3827253339321324423}
   m_Layer: 7
   m_Name: BrackableBlock
   m_TagString: Untagged
@@ -5462,3 +5463,26 @@ MonoBehaviour:
   _materials:
   - {fileID: 2100000, guid: 5f43d5a7797fa4340b973455f79366d5, type: 2}
   - {fileID: 2100000, guid: fe9775e291695b743bc90db9d03d00ae, type: 2}
+  _particles: {fileID: 6039030341163763754}
+  _destroyTime: 5
+--- !u!65 &3827253339321324423
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8869565384792541102}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

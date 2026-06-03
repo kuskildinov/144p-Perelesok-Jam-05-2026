@@ -95,7 +95,11 @@ public class Enemy : MonoBehaviour
         if (!_isAlive)
             return;
 
-        _isActive = true;
+        if (!_illumanation.IsInDarkness)
+            _isActive = true;
+        else
+            _isActive = false;
+
         if(light != null)
             _currentDetectedLight = light;
     }
@@ -225,9 +229,9 @@ public class Enemy : MonoBehaviour
 
         LookDirection dir = GetDirectionToPlayer();
         if (dir == LookDirection.Left)
-            ToggleRotation(true);
-        else if (dir == LookDirection.Right)
             ToggleRotation(false);
+        else if (dir == LookDirection.Right)
+            ToggleRotation(true);
     }
 
     private void ToggleRotation(bool isLeft)

@@ -3816,10 +3816,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 292697805}
     m_Modifications:
-    - target: {fileID: 1597639476636502889, guid: 26d326a09762f4e47bdc082105c11921, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.5164002
-      objectReference: {fileID: 0}
     - target: {fileID: 5720506195204489369, guid: 26d326a09762f4e47bdc082105c11921, type: 3}
       propertyPath: m_Name
       value: DoorBlock
@@ -3862,10 +3858,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6226977471947001817, guid: 26d326a09762f4e47bdc082105c11921, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8039457044551252673, guid: 26d326a09762f4e47bdc082105c11921, type: 3}
-      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5129,7 +5121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[0].Color.g
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[0].Color.r
@@ -5484,7 +5476,7 @@ SceneRoots:
   - {fileID: 8770809989982281378}
   - {fileID: 6781009982887282138}
   - {fileID: 7244837343127189074}
-  - {fileID: 926569957}
-  - {fileID: 1413764025}
-  - {fileID: 7262099277056906627}
   - {fileID: 1630096970}
+  - {fileID: 7262099277056906627}
+  - {fileID: 1413764025}
+  - {fileID: 926569957}

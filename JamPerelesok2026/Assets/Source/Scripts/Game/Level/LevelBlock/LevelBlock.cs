@@ -77,7 +77,7 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     #region >>> ENEMYS
     public void AddEnemy(Enemy enemy)
     {
-        if (_enemys == null)
+        if (_enemys == null || _enemys.Contains(enemy))
             return;
 
         _enemys.Add(enemy);
@@ -109,7 +109,7 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
             enemy.Agent.enabled = false;
         }
     }
-   
+
     #endregion
     #region >>> ROTATION
 
@@ -132,7 +132,7 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         _isMoved = true;
         float angle = -90;
         if (dir)
-            angle = -90;
+            angle = -90;       
         else
             angle = 90;
               

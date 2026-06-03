@@ -164,15 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   _itemsContainer: {fileID: 7485067392952294918}
   _enemysContainer: {fileID: 1127546846230880476}
-  _cells:
-  - {fileID: 8373227969757817961}
-  - {fileID: 8171441537149211495}
-  - {fileID: 6319093481977303033}
-  - {fileID: 2546841957261235777}
-  - {fileID: 8569001111985839970}
-  - {fileID: 1416600606186242426}
-  - {fileID: 6779641737477232925}
-  - {fileID: 934684455806785856}
+  _cells: []
   _rotateDuration: 0.5
   _raiseHeight: 2
   _raiseDuration: 0.5
@@ -366,17 +358,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
---- !u!114 &2546841957261235777 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4298612370649966546, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
-  m_PrefabInstance: {fileID: 1801314958167585171}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95ca09230da8ce46b48613e6beae262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelBlockCell
 --- !u!4 &5662473260561858122 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6226977471947001817, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
@@ -447,17 +428,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
---- !u!114 &1416600606186242426 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4298612370649966546, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
-  m_PrefabInstance: {fileID: 2886661761281648296}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95ca09230da8ce46b48613e6beae262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelBlockCell
 --- !u!4 &9107915169126132081 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6226977471947001817, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
@@ -528,17 +498,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
---- !u!114 &934684455806785856 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4298612370649966546, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
-  m_PrefabInstance: {fileID: 3989933781149662866}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95ca09230da8ce46b48613e6beae262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelBlockCell
 --- !u!4 &7004712219430842699 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6226977471947001817, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
@@ -614,17 +573,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6226977471947001817, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
   m_PrefabInstance: {fileID: 5386718457948959925}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8171441537149211495 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4298612370649966546, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
-  m_PrefabInstance: {fileID: 5386718457948959925}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95ca09230da8ce46b48613e6beae262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelBlockCell
 --- !u!1001 &5569976584467069104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -695,17 +643,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6226977471947001817, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
   m_PrefabInstance: {fileID: 5569976584467069104}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8569001111985839970 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4298612370649966546, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
-  m_PrefabInstance: {fileID: 5569976584467069104}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95ca09230da8ce46b48613e6beae262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelBlockCell
 --- !u!1001 &5734229480192822203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -772,17 +709,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6226977471947001817, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
   m_PrefabInstance: {fileID: 5734229480192822203}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8373227969757817961 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4298612370649966546, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
-  m_PrefabInstance: {fileID: 5734229480192822203}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95ca09230da8ce46b48613e6beae262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelBlockCell
 --- !u!1001 &7327810762516135631
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -853,17 +779,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6226977471947001817, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
   m_PrefabInstance: {fileID: 7327810762516135631}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6779641737477232925 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4298612370649966546, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
-  m_PrefabInstance: {fileID: 7327810762516135631}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95ca09230da8ce46b48613e6beae262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelBlockCell
 --- !u!1001 &7788504035305105451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -934,14 +849,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6226977471947001817, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
   m_PrefabInstance: {fileID: 7788504035305105451}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6319093481977303033 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4298612370649966546, guid: b5b3a53bcfcbbbd4199df5c64421c25d, type: 3}
-  m_PrefabInstance: {fileID: 7788504035305105451}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95ca09230da8ce46b48613e6beae262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelBlockCell
