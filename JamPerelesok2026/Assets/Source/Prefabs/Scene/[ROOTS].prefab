@@ -321,5 +321,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a10a420df80eac498a7b566d106793a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelRoot
-  _nextLevelScene: 
-  _startDialogs: []
+  _levelIndex: 0
+  _nextLevelScene: Level_1
+  _startDialogs:
+  - Phrase: "\u042F \u043F\u043E\u043D\u0438\u043C\u0430\u044E \u0442\u0432\u043E\u0439
+      \u0432\u044B\u0431\u043E\u0440, \u043E\u043D\u0438 \u043F\u0435\u0440\u0435\u0448\u043B\u0438
+      \u0433\u0440\u0430\u043D\u044C."
+    Color: {r: 1, g: 0.5, b: 0, a: 1}
+  _startCutScene: {fileID: 0}
+  _losePanel: {fileID: 0}
+  _pausePanel: {fileID: 0}
