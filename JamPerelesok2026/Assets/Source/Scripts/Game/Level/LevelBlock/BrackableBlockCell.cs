@@ -17,9 +17,12 @@ public class BrackableBlockCell : LevelBlockCell
 
     private void DestroyWall()
     {
+        if (!_isActive)
+            return;
+
+        _isActive = false;
         _meshRenderer.gameObject.SetActive(false);
         _particles.Play();
-
         StartCoroutine(DestroyRoutine());
     }
 

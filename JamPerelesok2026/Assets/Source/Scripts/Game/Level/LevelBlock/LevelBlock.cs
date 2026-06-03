@@ -96,8 +96,11 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {
         foreach (Enemy enemy in _enemys)
         {
-            enemy.Activate(null);
-            enemy.Agent.enabled = true;
+            if (enemy != null || enemy.IsAlive)
+            {
+                enemy.Activate(null);
+                enemy.Agent.enabled = true;
+            }                
         }
     }
 
@@ -105,8 +108,11 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {
         foreach (Enemy enemy in _enemys)
         {
-            enemy.Deactivate();
-            enemy.Agent.enabled = false;
+            if(enemy != null || enemy.IsAlive)
+            {
+                enemy.Deactivate();
+                enemy.Agent.enabled = false;
+            }           
         }
     }
 

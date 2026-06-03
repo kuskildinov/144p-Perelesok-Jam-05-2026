@@ -115,6 +115,9 @@ public class Enemy : MonoBehaviour
 
     private void SetIdleState()
     {
+        if (!_isAlive)
+            return;
+
         if (_currentState == EnemyState.Idle)
             return;
 
@@ -131,6 +134,9 @@ public class Enemy : MonoBehaviour
 
     private void LosePlayer()
     {
+        if (!_isAlive)
+            return;
+
         if (_loseTargetCoroutine != null)
             return;
 
@@ -139,6 +145,9 @@ public class Enemy : MonoBehaviour
 
     private void SetWalkState()
     {
+        if (!_isAlive)
+            return;
+
         if (_isAttacking)
             return;
 
@@ -161,6 +170,9 @@ public class Enemy : MonoBehaviour
 
     private void SetAttackState()
     {
+        if (!_isAlive)
+            return;
+
         Debug.Log("ATTACK");
         _currentState = EnemyState.Attack;
 
@@ -195,7 +207,7 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(_deadDestroyDeley);
 
-        this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
 
     #endregion
@@ -376,15 +388,13 @@ public class Enemy : MonoBehaviour
     #region >>> IN DARKNESS BEHAVIOUR
 
     private void OnEnterDarkness()
-    {
-        Debug.Log("Enter Darkness");
+    {       
         _isActive = false;
         LosePlayer();
     }
 
     private void OnExitDarkness()
-    {
-        Debug.Log("Exit Darkness");
+    {      
         _isActive = true;
         SetWalkState();
     }
@@ -408,6 +418,9 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!_isAlive)
+            return;
+
         if (other.gameObject.TryGetComponent<LevelBlock>(out LevelBlock block))
         {
             block.AddEnemy(this);          
