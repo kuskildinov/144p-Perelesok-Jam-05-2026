@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class LevelRoot : CompositeRoot
 {
     [SerializeField] private string _nextLevelScene;
     [SerializeField] private List<DialogPhrase> _startDialogs;
+    [SerializeField] private PlayableDirector _startCutScene;
 
     private BlackFade _blackFade;
 
@@ -29,6 +31,7 @@ public class LevelRoot : CompositeRoot
         InitializeLevelInteractablesHandler();
         InitializeStartDialogPanel();
         InitializeCommentsDialogPanel();
+        InitializeStartCutScene();
 
         TryShowStartPhrase();
     }
@@ -38,7 +41,9 @@ public class LevelRoot : CompositeRoot
         ResumeGame();
 
         _blackFade.FadeIn();
-        _playeRoot.ToggleActivation(true);
+
+        PlayStartSceneCutScene();
+       
     }
 
     private void PauseGame()
@@ -51,6 +56,34 @@ public class LevelRoot : CompositeRoot
         Time.timeScale = 1f;
     }
 
+    #region >>> START CUT SCENE
+
+    private void InitializeStartCutScene()
+    {
+        if (_startCutScene != null)
+        {
+            _startCutScene.Stop();
+        }
+    }
+
+
+    private void PlayStartSceneCutScene()
+    {
+        if (_startCutScene == null)
+        {
+            OnStartCurSceneEnded();
+            return;
+        }
+
+        _startCutScene.Play();
+    }
+
+    public void OnStartCurSceneEnded()
+    {
+        _playeRoot.ToggleActivation(true);
+    }
+
+    #endregion
     #region >>> LEVEL START PHRASE
 
     private void InitializeStartDialogPanel()
@@ -159,14 +192,7 @@ public class LevelRoot : CompositeRoot
 
     public void TryLeaveLevel()
     {
-        if (_playeRoot.Player.CurrentTakedItem.Type == ItemType.Light)
-        {
-            StartCoroutine(ChangeSceneRoutine());
-        }
-        else
-        {
-
-        }
+        StartCoroutine(ChangeSceneRoutine());
     }
 
     private  IEnumerator ChangeSceneRoutine()

@@ -177,14 +177,18 @@ public class Player : MonoBehaviour
 
     private void OnEnterDarkness()
     {
-        Debug.Log("б релмнре");
+        if (!_isActive)
+            return;
+               
         _darkEffect.Play();
         _inDarkness = true;
     }
 
     private void OnExitDarkness()
     {
-        Debug.Log("бшьек хг релмнрше!");
+        if (!_isActive)
+            return;
+              
         _darkEffect.Stop();
         _inDarkness = false;
         _darknessTimer = 0f;
