@@ -9,6 +9,7 @@ public class LevelRoot : CompositeRoot
     [SerializeField] private string _nextLevelScene;
     [SerializeField] private List<DialogPhrase> _startDialogs;
     [SerializeField] private PlayableDirector _startCutScene;
+    [SerializeField] private GameObject _losePanel;
 
     private BlackFade _blackFade;
 
@@ -192,17 +193,28 @@ public class LevelRoot : CompositeRoot
 
     public void TryLeaveLevel()
     {
-        StartCoroutine(ChangeSceneRoutine());
+        LoadScene(_nextLevelScene);
     }
 
-    private  IEnumerator ChangeSceneRoutine()
+    public void TryReloadLevel()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        LoadScene(SceneManager.GetActiveScene().name);
+    }
 
-        _blackFade.FadeOut(-1,() =>
+    private void LoadScene(string name)
+    {
+        _blackFade.FadeOut(-1, () =>
         {
-            SceneManager.LoadScene(_nextLevelScene);
-        });       
+            SceneManager.LoadScene(name);
+        });
+    }
+
+    public void LoadMainMenuScene()
+    {
+        _blackFade.FadeOut(-1, () =>
+        {
+            SceneManager.LoadScene(GlobalVars.MainMenuSceneName);
+        });
     }
 
     #endregion
@@ -210,5 +222,18 @@ public class LevelRoot : CompositeRoot
     public void OnPlayerModeChanged(PlayerMode newMode)
     {
         _blocksHandler.Reset();
+    }
+
+    public void OnPlayerDead()
+    {
+        StartCoroutine(PlayerDeadRoutine());
+    }
+
+    private IEnumerator PlayerDeadRoutine()
+    {
+        yield return new WaitForSecondsRealtime(3f);
+
+        _playeRoot.SetCursorActive();
+        _losePanel.gameObject.SetActive(true);
     }
 }

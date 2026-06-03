@@ -64,7 +64,7 @@ public class PlayerRoot : CompositeRoot
 
     public void OnPlayerDead()
     {
-        Debug.Log("Dead");
+        _levelRoot.OnPlayerDead();
     }
 
     #endregion
@@ -131,14 +131,24 @@ public class PlayerRoot : CompositeRoot
     {
         if(newMode == PlayerMode.Character)
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            SetCursorNotActive();
         }
         else if (newMode == PlayerMode.Player)
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            SetCursorActive();
         }
+    }
+
+    public void SetCursorActive()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void SetCursorNotActive()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     #endregion
