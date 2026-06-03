@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     private const string AnimatorAttackTrigger = "Attack";
     private const string AnimatorDeadParam = "Dead";
 
+    [SerializeField] private SpriteRenderer _renderer;
     [Header("Movement")]
     [SerializeField] private float _speed = 3.5f;
 
@@ -22,7 +23,7 @@ public class Enemy : MonoBehaviour
     [Header("Attack")]
     [SerializeField] private float _attackDistance = 0.1f;
     [SerializeField] private float _attackDuration = 1f;
-    [SerializeField] private float _timeBeforeAttack = 1f;
+    [SerializeField] private float _timeBeforeAttack = 3f;
     [SerializeField] private AttackZone _topAttackZone;
     [SerializeField] private AttackZone _bottomAttackZone;
     [SerializeField] private AttackZone _leftAttackZone;
@@ -38,12 +39,11 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
 
     private Coroutine _loseTargetCoroutine;
+    private Coroutine _attackCoroutine;
 
     protected bool _isActive;
     protected bool _isAlive;
     private bool _isAttacking;
-
-    private bool _canSeePlayer;
 
     private AttackZone _curentAttackZone;
     private Coroutine _attackRoutine;
@@ -71,8 +71,7 @@ public class Enemy : MonoBehaviour
 
         _isActive = false;
         _isAlive = true;
-        _canSeePlayer = false;
-
+        
         _currentState = EnemyState.Idle;
 
         SubscribeToEvents();
@@ -82,11 +81,11 @@ public class Enemy : MonoBehaviour
     {
         if (!_isAlive)
             return;
-
-        //CheckLighterDistance();      
-       // CheckPlayerPosition();
-        CheckAttackRange();
+        
+        if(_isActive)
+            CheckAttackRange();
         WalkHandler();
+        RotateByPlayerPosition();
     }
 
     #region >>> ACTIVATION
@@ -107,63 +106,7 @@ public class Enemy : MonoBehaviour
         SetIdleState();
     }
 
-    #endregion
-    #region >>> DETECTION
-
-    private void CheckLighterDistance()
-    {
-        if (!_isActive || _currentDetectedLight == null)
-            return;
-
-        float distance = Vector3.Distance(
-            transform.position,
-            _currentDetectedLight.transform.position);
-
-        if (distance > GlobalVars.LightRadius + 1f)
-        {
-            Deactivate();
-        }      
-    }
-
-    private void CheckPlayerPosition()
-    {
-        if (!_isActive || !_isAlive || _player == null)
-            return;
-
-        Vector3 origin = transform.position + Vector3.up * _eyeHeight;
-        Vector3 targetPosition = _player.transform.position + Vector3.up * _eyeHeight;
-
-        Vector3 direction = (targetPosition - origin).normalized;
-        float distance = Vector3.Distance(origin, targetPosition);
-
-        if (distance > _maxDistance)
-        {
-            _canSeePlayer = false;
-            SetIdleState();
-            return;
-        }
-
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance, _visionMask))
-        {           
-            if (hit.collider.TryGetComponent<Player>(out _))
-            {               
-                _canSeePlayer = true;
-                SetWalkState();
-            }
-            else
-            {              
-                _canSeePlayer = false;
-                LosePlayer();
-            }
-        }
-        else
-        {
-            _canSeePlayer = false;
-            SetIdleState();
-        }
-    }
-
-    #endregion
+    #endregion   
     #region >>> STATES
 
     private void SetIdleState()
@@ -214,6 +157,7 @@ public class Enemy : MonoBehaviour
 
     private void SetAttackState()
     {
+        Debug.Log("ATTACK");
         _currentState = EnemyState.Attack;
 
         PlayAttackAnimation();
@@ -272,11 +216,31 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion
+    #region >>> ROTATION
+
+    private void RotateByPlayerPosition()
+    {
+        if (!_isAlive || _isAttacking)
+            return;
+
+        LookDirection dir = GetDirectionToPlayer();
+        if (dir == LookDirection.Left)
+            ToggleRotation(true);
+        else if (dir == LookDirection.Right)
+            ToggleRotation(false);
+    }
+
+    private void ToggleRotation(bool isLeft)
+    {
+        _renderer.flipX = isLeft;
+    }
+
+    #endregion
     #region >>> ATTACK
 
     private void CheckAttackRange()
     {
-        if (!_isActive || !_canSeePlayer || _isAttacking)
+        if (!_isActive || _isAttacking)
             return;
 
         float distance = Vector3.Distance(
@@ -284,8 +248,12 @@ public class Enemy : MonoBehaviour
             _player.transform.position);
 
         if (distance <= _attackDistance)
-        {
-            StartCoroutine(AttackRoutine());
+        {            
+            _attackCoroutine = StartCoroutine(AttackRoutine());
+        }
+        else
+        {           
+            SetWalkState();
         }
     }
 
@@ -307,19 +275,20 @@ public class Enemy : MonoBehaviour
    
     private IEnumerator AttackRoutine()
     {
+        SetIdleState();
         _isAttacking = true;
-
-        yield return new WaitForSeconds(_timeBeforeAttack);
-
-        SetAttackState();
-
         if (_agent != null && _agent.enabled)
         {
             _agent.isStopped = true;
             _agent.ResetPath();
         }
         yield return new WaitForSeconds(0.2f);
-               
+
+        yield return new WaitForSeconds(_timeBeforeAttack);
+        if (!_isAlive)
+            yield break;
+
+        SetAttackState();
         LookDirection dir = GetDirectionToPlayer();
         ActivateAttackZoneByDirection(dir);
                
@@ -328,16 +297,7 @@ public class Enemy : MonoBehaviour
         if (_curentAttackZone != null)
             _curentAttackZone.gameObject.SetActive(false);
 
-        _isAttacking = false;
-               
-        if (_canSeePlayer)
-        {
-            SetWalkState();   // продолжаем погоню
-        }
-        else
-        {
-            SetIdleState();   // потеряли цель
-        }
+        _isAttacking = false;        
     }
 
     private void ActivateAttackZoneByDirection(LookDirection direction)
@@ -412,13 +372,15 @@ public class Enemy : MonoBehaviour
     #region >>> IN DARKNESS BEHAVIOUR
 
     private void OnEnterDarkness()
-    {        
+    {
+        Debug.Log("Enter Darkness");
         _isActive = false;
         LosePlayer();
     }
 
     private void OnExitDarkness()
-    {       
+    {
+        Debug.Log("Exit Darkness");
         _isActive = true;
         SetWalkState();
     }
@@ -477,25 +439,15 @@ public class Enemy : MonoBehaviour
             Debug.Log("Exit from Block");
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        if (_player == null)
-            return;
-
-        Vector3 origin = transform.position + Vector3.up * _eyeHeight;
-        Vector3 target = _player.transform.position + Vector3.up * _eyeHeight;
-
-        Gizmos.color = _canSeePlayer ? Color.red : Color.green;
-        Gizmos.DrawLine(origin, target);
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _maxDistance);
-    }
-
+   
     private void OnDestroy()
     {
         UnsubscribeToEvents();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position,_attackDistance);
     }
 }
 

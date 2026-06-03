@@ -8,8 +8,7 @@ public class NarativeItem : Interactable
     {
         if (!_isActive)
             return;
-
-        _isActive = false;
+               
         _root.TryShowCommentDialog(_dialogPhrase);
     }
 }
