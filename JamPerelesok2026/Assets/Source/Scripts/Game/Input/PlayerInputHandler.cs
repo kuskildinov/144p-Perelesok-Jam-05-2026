@@ -10,6 +10,7 @@ public class PlayerInputHandler : MonoBehaviour
     public event Action ChangeStateInput;
     public event Action RightRotateInput;
     public event Action LeftRotateInput;
+    public event Action PauseInput;
 
    public void OnMove(InputValue value)
     {       
@@ -53,6 +54,14 @@ public class PlayerInputHandler : MonoBehaviour
         if (value.isPressed)
         {
             LeftRotateInput?.Invoke();
+        }
+    }
+
+    public void OnPause(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            PauseInput?.Invoke();
         }
     }
 }

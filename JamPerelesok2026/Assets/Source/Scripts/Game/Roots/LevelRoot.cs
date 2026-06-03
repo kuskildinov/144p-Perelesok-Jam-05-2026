@@ -11,6 +11,7 @@ public class LevelRoot : CompositeRoot
     [SerializeField] private List<DialogPhrase> _startDialogs;
     [SerializeField] private PlayableDirector _startCutScene;
     [SerializeField] private GameObject _losePanel;
+    [SerializeField] private GameObject _pausePanel;
 
     private BlackFade _blackFade;
 
@@ -22,11 +23,15 @@ public class LevelRoot : CompositeRoot
     private StartDialogPanel _startDialogPanel;
     private CommentsDialogPanel _commentsDialogPanel;
 
+    private bool _isGamePaused = false;
+
     public override void Compose()
     {
         _playeRoot = FindAnyObjectByType<PlayerRoot>();
         _inputHandler = _playeRoot.InputHandler;
         _blackFade = FindAnyObjectByType<BlackFade>();
+        Time.timeScale = 1f;
+        _isGamePaused = false;
 
         InitializeLevelBlocksHandler();
         InitializeLevelTrapsHandler();
@@ -37,6 +42,7 @@ public class LevelRoot : CompositeRoot
         SaveLevelIndex();
 
         TryShowStartPhrase();
+        SubscribeToEvents();
     }
 
     private void StartGame()
@@ -49,14 +55,20 @@ public class LevelRoot : CompositeRoot
        
     }
 
-    private void PauseGame()
+    public void PauseGame()
     {
+        _isGamePaused = true;
+        OpenPausePanel();
         Time.timeScale = 0f;
+        _playeRoot.SetCursorActive();
     }
     
-    private void ResumeGame()
+    public void ResumeGame()
     {
+        _isGamePaused = false;
+        ClosePausePanel();
         Time.timeScale = 1f;
+        _playeRoot.SetCursorNotActive();
     }
 
     private void SaveLevelIndex()
@@ -90,6 +102,27 @@ public class LevelRoot : CompositeRoot
     public void OnStartCurSceneEnded()
     {
         _playeRoot.ToggleActivation(true);
+    }
+
+    #endregion
+    #region >>> PAUSE PANEL
+
+    private void OpenPausePanel()
+    {
+        _pausePanel.gameObject.SetActive(true);
+    }
+
+    private void ClosePausePanel()
+    {
+        _pausePanel.gameObject.SetActive(false);
+    }
+
+    private void OnPauseButtonClicked()
+    {
+        if (_isGamePaused)
+            ResumeGame();
+        else
+            PauseGame();
     }
 
     #endregion
@@ -205,12 +238,13 @@ public class LevelRoot : CompositeRoot
     }
 
     public void TryReloadLevel()
-    {
+    {      
         LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void LoadScene(string name)
     {
+        Time.timeScale = 1f;
         _blackFade.FadeOut(-1, () =>
         {
             SceneManager.LoadScene(name);
@@ -219,10 +253,20 @@ public class LevelRoot : CompositeRoot
 
     public void LoadMainMenuScene()
     {
-        _blackFade.FadeOut(-1, () =>
-        {
-            SceneManager.LoadScene(GlobalVars.MainMenuSceneName);
-        });
+        LoadScene(GlobalVars.MainMenuSceneName);
+    }
+
+    #endregion
+    #region >>> EVENTS
+
+    private void SubscribeToEvents()
+    {
+        _inputHandler.PauseInput += OnPauseButtonClicked;
+    }
+
+    private void UnSubscribeToEvents()
+    {
+        _inputHandler.PauseInput -= OnPauseButtonClicked;
     }
 
     #endregion
@@ -243,5 +287,10 @@ public class LevelRoot : CompositeRoot
 
         _playeRoot.SetCursorActive();
         _losePanel.gameObject.SetActive(true);
+    }
+
+    private void OnDestroy()
+    {
+        UnSubscribeToEvents();
     }
 }
