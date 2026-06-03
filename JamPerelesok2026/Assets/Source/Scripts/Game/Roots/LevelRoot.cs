@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelRoot : CompositeRoot
 {
+    [SerializeField] private int _levelIndex;
     [SerializeField] private string _nextLevelScene;
     [SerializeField] private List<DialogPhrase> _startDialogs;
     [SerializeField] private PlayableDirector _startCutScene;
@@ -33,6 +34,7 @@ public class LevelRoot : CompositeRoot
         InitializeStartDialogPanel();
         InitializeCommentsDialogPanel();
         InitializeStartCutScene();
+        SaveLevelIndex();
 
         TryShowStartPhrase();
     }
@@ -55,6 +57,12 @@ public class LevelRoot : CompositeRoot
     private void ResumeGame()
     {
         Time.timeScale = 1f;
+    }
+
+    private void SaveLevelIndex()
+    {
+        GlobalVars.CurrentStartedSceneIndex = _levelIndex;
+        PlayerPrefs.SetInt(GlobalVars.CurrentStartedSceneSaveKey, _levelIndex);
     }
 
     #region >>> START CUT SCENE
