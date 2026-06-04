@@ -5,6 +5,8 @@ public class BrackableBlockCell : LevelBlockCell
 {
     [SerializeField] private ParticleSystem _particles;
     [SerializeField] private float _destroyTime = 5f;
+    [SerializeField] private AudioSource _mainSource;
+    [SerializeField] private AudioClip _brakeSound;
 
     private bool _isActive;
 
@@ -20,6 +22,7 @@ public class BrackableBlockCell : LevelBlockCell
         if (!_isActive)
             return;
 
+        PlayBreakSound();
         _isActive = false;
         _meshRenderer.gameObject.SetActive(false);
         _particles.Play();
@@ -31,6 +34,11 @@ public class BrackableBlockCell : LevelBlockCell
         yield return new WaitForSecondsRealtime(_destroyTime);
 
         this.gameObject.SetActive(false);
+    }
+
+    private void PlayBreakSound()
+    {
+        _mainSource.PlayOneShot(_brakeSound);
     }
 
     private void OnTriggerEnter(Collider other)

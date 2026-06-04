@@ -85,5 +85,14 @@ public struct DialogPhrase
 {
     [TextArea] public string Phrase;
     public Color Color;
+    public DialogType Type;
+}
+
+[Serializable]
+public enum DialogType
+{
+    Girl,
+    Death,
+    Other,
 }
 

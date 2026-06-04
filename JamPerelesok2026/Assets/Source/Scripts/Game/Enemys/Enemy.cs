@@ -32,6 +32,13 @@ public class Enemy : MonoBehaviour
     [Header("Dead")]
     [SerializeField] private float _deadDestroyDeley = 2f;
 
+    [Header("Sounds Settings")]
+    [SerializeField] private AudioSource _commonSource;
+    [SerializeField] private AudioSource _walkSource;
+    [SerializeField] private AudioClip _activationSound;
+    [SerializeField] private AudioClip _attackSound;
+    [SerializeField] private AudioClip _deadSound;
+
     private EnemysRoot _root;
     private NavMeshAgent _agent;
     private Player _player;
@@ -94,13 +101,15 @@ public class Enemy : MonoBehaviour
     {
         if (!_isAlive)
             return;
-
+       
         if (!_illumanation.IsInDarkness)
             _isActive = true;
         else
             _isActive = false;
 
-        if(light != null)
+        PlayActivationSound();
+
+        if (light != null)
             _currentDetectedLight = light;
     }
 
@@ -130,6 +139,7 @@ public class Enemy : MonoBehaviour
         }
 
         PlayIdleAnimation();
+        ToggleWalkSounds(false);
     }
 
     private void LosePlayer()
@@ -165,6 +175,7 @@ public class Enemy : MonoBehaviour
             _agent.isStopped = false;
         }
 
+        ToggleWalkSounds(true);
         PlayWalkAnimation();
     }
 
@@ -172,10 +183,10 @@ public class Enemy : MonoBehaviour
     {
         if (!_isAlive)
             return;
-
-        Debug.Log("ATTACK");
+               
         _currentState = EnemyState.Attack;
 
+        ToggleWalkSounds(false);
         PlayAttackAnimation();
     }
 
@@ -190,6 +201,8 @@ public class Enemy : MonoBehaviour
             _agent.ResetPath();
         }
 
+        PlayDeadSound();
+        ToggleWalkSounds(false);
         PlayDeadAnimation();
         StartCoroutine(DeadDestroyRoutine());
     }
@@ -305,6 +318,7 @@ public class Enemy : MonoBehaviour
             yield break;
 
         SetAttackState();
+        PlayAttackSound();
         LookDirection dir = GetDirectionToPlayer();
         ActivateAttackZoneByDirection(dir);
                
@@ -394,9 +408,36 @@ public class Enemy : MonoBehaviour
     }
 
     private void OnExitDarkness()
-    {      
+    {
+        PlayActivationSound();
         _isActive = true;
         SetWalkState();
+    }
+
+    #endregion
+    #region >>> SOUNDS
+
+    private void ToggleWalkSounds(bool value)
+    {
+        if (!_walkSource.isPlaying && value)
+            _walkSource.Play();
+        else if (_walkSource.isPlaying && !value)
+            _walkSource.Pause();
+    }
+
+    private void PlayActivationSound()
+    {
+        _commonSource.PlayOneShot(_activationSound);
+    }
+
+    private void PlayAttackSound()
+    {
+        _commonSource.PlayOneShot(_attackSound);
+    }
+
+    private void PlayDeadSound()
+    {
+        _commonSource.PlayOneShot(_deadSound);
     }
 
     #endregion

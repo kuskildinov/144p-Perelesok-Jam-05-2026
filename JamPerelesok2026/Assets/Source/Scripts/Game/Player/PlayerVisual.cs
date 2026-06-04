@@ -33,6 +33,7 @@ public class PlayerVisual : MonoBehaviour
         if(!_player.IsActive)
         {
             PlayIdleAnimation();
+            return;
         }
 
         WalkAnimationHandler();
@@ -50,10 +51,12 @@ public class PlayerVisual : MonoBehaviour
         if(_movement.sqrMagnitude > 0)
         {
             PlayWalkAnimation();
+            _player.ToggleWalkSound(true);
         }
         else
         {
             PlayIdleAnimation();
+            _player.ToggleWalkSound(false);
         }
     }
 

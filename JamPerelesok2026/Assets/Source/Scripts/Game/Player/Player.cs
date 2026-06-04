@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController), typeof(Rigidbody))]
@@ -9,6 +10,17 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private PlayerInteractions _playerInteractions;
     [SerializeField] private PlayerAttack _playerAttack;
+    [Header("Sounds")]
+    [SerializeField] private AudioSource _commonSource;
+    [SerializeField] private AudioSource _walkSource;
+    [SerializeField] private AudioSource _darkSource;
+    [Header("SoundsClips")]
+    [SerializeField] private AudioClip _attackSound;
+    [SerializeField] private AudioClip _takeDamageSound;
+    [SerializeField] private AudioClip _dropItemSound;
+    [SerializeField] private AudioClip _takeItemSound;
+    [SerializeField] private AudioClip _changeModeSound;
+    [SerializeField] private AudioClip _deadSound;
     [Header("Darkness effects")]
     [SerializeField] private CharacterIllumination _illumanation;
     [SerializeField] private ParticleSystem _darkEffect;
@@ -24,6 +36,7 @@ public class Player : MonoBehaviour
     private PlayerInputHandler _inputHandler;
     private LookDirection _currentLookDirection;
     private float _darknessTimer;
+    private Coroutine _inDarknessCoroutine;
 
     public bool IsActive => _isActive;
     public bool IsAlive => _isAlive;
@@ -82,6 +95,7 @@ public class Player : MonoBehaviour
             ToggleActivation(false);
         }
 
+        PlayChangeModeSound();
         _playerVisual.Reset();
     }
 
@@ -106,11 +120,13 @@ public class Player : MonoBehaviour
 
     public void OnItemTaked(ItemType type)
     {
+        PlayTakeItemSound();
         _playerVisual.OnItemTaked(type);
     }
 
     public void OnItemDropped(ItemType type)
     {
+        PlayDropItemSound();
         _playerVisual.OnItemDropped(type);
     }
 
@@ -118,6 +134,8 @@ public class Player : MonoBehaviour
     {
         _playerInteractions.OnCurrentItemUsed();
     }
+
+    
 
     #endregion
     #region >>> LOOK DIRECTION
@@ -156,6 +174,7 @@ public class Player : MonoBehaviour
         if (!_isAlive)
             return;
 
+        PlayTakeDamageSound();
         _playerMovment.KnockBack(damageSource);
         _playerHealth.OnTakeDamage();
         _playerVisual.OnTakeDamage();
@@ -165,6 +184,8 @@ public class Player : MonoBehaviour
     public void OnPlayerDead()
     {
         _playerInteractions.DropItem();
+
+        PlayDeadSound();
 
          _isAlive = false;
         _isActive = false;      
@@ -179,7 +200,8 @@ public class Player : MonoBehaviour
     {
         if (!_isActive)
             return;
-               
+
+        ToggleDarkSounds(true);
         _darkEffect.Play();
         _inDarkness = true;
     }
@@ -188,10 +210,83 @@ public class Player : MonoBehaviour
     {
         if (!_isActive)
             return;
-              
+
+        ToggleDarkSounds(false);
         _darkEffect.Stop();
         _inDarkness = false;
         _darknessTimer = 0f;
+    }
+
+    #endregion
+    #region >>> SOUNDS
+
+    public void ToggleWalkSound(bool value)
+    {       
+        if (!_walkSource.isPlaying && value)
+            _walkSource.Play();
+        else if(_walkSource.isPlaying && !value)
+            _walkSource.Pause();
+    }
+
+    public void ToggleDarkSounds(bool value)
+    {
+        if (_inDarknessCoroutine != null)
+            StopCoroutine(_inDarknessCoroutine);
+
+        if (value && !_darkSource.isPlaying)
+            _darkSource.Play();
+
+        _inDarknessCoroutine = StartCoroutine(FadeVolume(value ? 1f : 0f, 1f));
+    }
+
+    private IEnumerator FadeVolume(float targetVolume, float duration)
+    {
+        float startVolume = _darkSource.volume;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            _darkSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsed / duration);
+            yield return null;
+        }
+
+        _darkSource.volume = targetVolume;
+
+        if (!_darkSource.isPlaying && targetVolume == 0f)
+            _darkSource.Pause();
+
+        _inDarknessCoroutine = null;
+    }
+
+    public void PlayAttackSound()
+    {
+        _commonSource.PlayOneShot(_attackSound);
+    }
+
+    public void PlayTakeDamageSound()
+    {
+        _commonSource.PlayOneShot(_takeDamageSound);
+    }
+    
+    public void PlayDropItemSound()
+    {
+        _commonSource.PlayOneShot(_dropItemSound);
+    }
+
+    public void PlayTakeItemSound()
+    {
+        _commonSource.PlayOneShot(_takeItemSound);        
+    }
+
+    public void PlayChangeModeSound()
+    {
+        _commonSource.PlayOneShot(_changeModeSound);
+    }
+
+    public void PlayDeadSound()
+    {
+        _commonSource.PlayOneShot(_deadSound);
     }
 
     #endregion

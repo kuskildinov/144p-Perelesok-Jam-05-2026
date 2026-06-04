@@ -30,6 +30,7 @@ public class PlayerAttack : MonoBehaviour
         if (!_player.IsActive)
             return;
 
+        _player.PlayAttackSound();
         LookDirection currentDirection = _player.CurrentLookDirection;
         ActivateAttackZoneByDirection(currentDirection);
     }

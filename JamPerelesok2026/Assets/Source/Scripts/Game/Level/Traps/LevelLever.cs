@@ -4,6 +4,8 @@ public class LevelLever : Interactable
 {
     [SerializeField] private Vector2 _rotationValues;
     [SerializeField] private Transform _handle;
+    [SerializeField] private AudioSource _mainSource;
+    [SerializeField] private AudioClip _toggleSound;
 
     private LevelTrapsHandler _trapsHandler;
     
@@ -18,7 +20,7 @@ public class LevelLever : Interactable
     {
         _trapsHandler.ToggleTraps();
         _isActive = !_isActive;
-
+        PlayToggleSound();
         UpdateHandlePosition();
     }
 
@@ -32,6 +34,11 @@ public class LevelLever : Interactable
         {
             _handle.localEulerAngles = new Vector3(_rotationValues.y, 0, 0 );
         }
+    }
+
+    private void PlayToggleSound()
+    {
+        _mainSource.PlayOneShot(_toggleSound);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -14,6 +14,9 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     [SerializeField] private float _raiseHeight = 1f;
     [SerializeField] private float _raiseDuration = 0.2f;
     [SerializeField] private float _lowerDuration = 0.2f;
+    [Header("Sounds")]
+    [SerializeField] private AudioSource _mainSource;
+    [SerializeField] private AudioClip _turnSound;
 
     [SerializeField] private List<Item> _items = new List<Item>();
     [SerializeField] private List<Enemy> _enemys = new List<Enemy>();
@@ -122,7 +125,7 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public void RotateBlock(bool isLeft, Action onCompete)
     {
         DeactivateAllEnemys();
-
+        PlayTurnSound();
         RotateObject(gameObject, isLeft,
            () =>
            {
@@ -175,6 +178,14 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         {
             cell.ToggleOutline(isPointed, value);
         }
+    }
+
+    #endregion
+    #region >>> SOUNDS
+
+    public void PlayTurnSound()
+    {
+        _mainSource.PlayOneShot(_turnSound);
     }
 
     #endregion

@@ -7,6 +7,8 @@ public class Door : Interactable
 
     [SerializeField] private Collider _doorCollider;
     [SerializeField] private Animator _animator;
+    [SerializeField] private AudioSource _source;
+    [SerializeField] private AudioClip _openSound;
 
     private bool _isOpen = false;
 
@@ -38,12 +40,20 @@ public class Door : Interactable
         Open();
     }
     #endregion
+    #region >>> SOUNDS
+
+    private void PlayOpenSound()
+    {
+        _source.PlayOneShot(_openSound);
+    }
+
+    #endregion
 
     private void Open()
     {
         _isOpen = true;
         _doorCollider.enabled = false;
-
+        PlayOpenSound();
         HideIndicator();
         PlayOpenAnimation();
     }

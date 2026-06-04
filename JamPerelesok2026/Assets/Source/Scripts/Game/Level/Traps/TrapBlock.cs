@@ -11,6 +11,11 @@ public class TrapBlock : MonoBehaviour
     [SerializeField] private float _downDuration = 1.5f;
     [SerializeField] private float _delayBeforeDown = 0.5f;
     [SerializeField] private AttackZone _attackZone;
+    [Header("Sounds")]
+    [SerializeField] private AudioSource _commonSource;
+    [SerializeField] private AudioClip _activationSound;
+    [SerializeField] private AudioClip _deactivationSound;
+    [SerializeField] private AudioClip _attackSound;
 
     private LevelTrapsHandler _trapshandler;
     private Tween _currentTween;
@@ -46,6 +51,7 @@ public class TrapBlock : MonoBehaviour
         if (!_isActive)
             return;
 
+        PlayAttackSound();
         _currentTween?.Kill();
 
         Sequence sequence = DOTween.Sequence();
@@ -72,10 +78,18 @@ public class TrapBlock : MonoBehaviour
     private void Deactivate()
     {
         _isActive = false;
-
+       
         _spikes.localPosition = new Vector3(_spikes.localPosition.x, _spikesYPositions.z, _spikes.localPosition.z);
     }
 
+    #region >>> SOUNDS
+
+    private void PlayAttackSound()
+    {
+        _commonSource.PlayOneShot(_attackSound);
+    }
+
+    #endregion
     #region >>> EVENTS
 
     private void SubscribeToEvents()
