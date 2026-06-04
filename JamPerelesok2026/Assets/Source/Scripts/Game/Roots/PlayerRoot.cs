@@ -152,4 +152,14 @@ public class PlayerRoot : CompositeRoot
     }
 
     #endregion
+
+    public void OnPlayerTakeKey()
+    {
+        _playerUI.ShowKeyUi();
+    }
+
+    public void OnPlayerUseKey()
+    {
+        _playerUI.HideKeyUi();
+    }
 }

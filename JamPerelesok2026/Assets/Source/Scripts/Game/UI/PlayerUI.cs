@@ -1,11 +1,20 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
     [Header("Player Health")]
     [SerializeField] private Transform _heartsContainer;
     [SerializeField] private GameObject _heartPrefab;
+    [SerializeField] private Sprite _activeHeart;
+    [SerializeField] private Sprite _notActiveHeart;
+    [SerializeField] private Image _heart_1_image;
+    [SerializeField] private Image _heart_2_image;
+    [SerializeField] private Image _heart_3_image;
+    [Header("Key")]
+    [SerializeField] private Image _keyImage;
 
     private PlayerRoot _root;
     private List<GameObject> _currentHearts;
@@ -26,22 +35,39 @@ public class PlayerUI : MonoBehaviour
 
     private void UpdateHeartsCount(int count)
     {
-        RemoveAllHearts();
-
-        for (int i = 0; i < count; i++)
+        if (count == 3)
         {
-            var heart = Instantiate(_heartPrefab, _heartsContainer);
-            _currentHearts.Add(heart);
+            _heart_1_image.sprite = _activeHeart;
+            _heart_2_image.sprite = _activeHeart;
+            _heart_3_image.sprite = _activeHeart;
+        }
+        else if (count == 2)
+        {
+            _heart_1_image.sprite = _activeHeart;
+            _heart_2_image.sprite = _activeHeart;
+            _heart_3_image.sprite = _notActiveHeart;
+        }
+        else if(count == 1)
+        {
+            _heart_1_image.sprite = _activeHeart;
+            _heart_2_image.sprite = _notActiveHeart;
+            _heart_3_image.sprite = _notActiveHeart;
+        }
+        else if(count == 0)
+        {
+            _heart_1_image.sprite = _notActiveHeart;
+            _heart_2_image.sprite = _notActiveHeart;
+            _heart_3_image.sprite = _notActiveHeart;
         }
     }
 
-    private void RemoveAllHearts()
+    public void ShowKeyUi()
     {
-        for (int i = 0; i < _currentHearts.Count; i++)
-        {
-            Destroy(_currentHearts[i].gameObject);
-        }
+        _keyImage.gameObject.SetActive(true);
+    }
 
-        _currentHearts.Clear();
+    public void HideKeyUi()
+    {
+        _keyImage.gameObject.SetActive(false);
     }
 }

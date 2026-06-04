@@ -43,8 +43,10 @@ public class BrackableBlockCell : LevelBlockCell
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.TryGetComponent<AttackZone>(out AttackZone attackZone))
-        {
+        Debug.Log($"Нас увидел {other}");
+
+        if (other.gameObject.TryGetComponent<AttackZone>(out AttackZone attackZone))
+        {           
             if(attackZone.Type == AttackZoneType.Player && _isActive)
             {
                 DestroyWall();

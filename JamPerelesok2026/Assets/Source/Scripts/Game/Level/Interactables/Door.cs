@@ -31,13 +31,12 @@ public class Door : Interactable
     #endregion
     #region >>> INTERACT
     public override void TryInteract(Player player, Item item)
-    {       
-        if (item == null || item.Type != ItemType.Key)
-            return;
-
-        player.OnCurrentItemUsed();     
-
-        Open();
+    { 
+        if(player.HasKey)
+        {
+            player.UseKey();
+            Open();
+        }        
     }
     #endregion
     #region >>> SOUNDS

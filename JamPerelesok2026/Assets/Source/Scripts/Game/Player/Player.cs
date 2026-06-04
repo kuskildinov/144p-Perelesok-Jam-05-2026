@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     private bool _isAlive = true;  
     private bool _isCanTakeDamage = true;
     private bool _inDarkness = false;
+    private bool _hasKey = false;
     private PlayerRoot _root;
     private PlayerInputHandler _inputHandler;
     private LookDirection _currentLookDirection;
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
     public LookDirection CurrentLookDirection => _currentLookDirection;
     public Item CurrentTakedItem => _playerInteractions.CurrentTakedItem;
     public int CurrentHealth => _playerHealth.CurrentHealth;
+    public bool HasKey => _hasKey;
 
     public event Action<LookDirection> LookDirectionChanged;
 
@@ -139,7 +141,19 @@ public class Player : MonoBehaviour
         _playerInteractions.OnCurrentItemUsed();
     }
 
-    
+    public void TakeKey()
+    {
+        _hasKey = true;
+
+        _root.OnPlayerTakeKey();
+    }
+
+    public void UseKey()
+    {
+        _hasKey = false;
+
+        _root.OnPlayerUseKey();
+    }
 
     #endregion
     #region >>> LOOK DIRECTION

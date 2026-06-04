@@ -247,7 +247,7 @@ public class LevelRoot : CompositeRoot
     public void OnPlayerDead()
     {
         StartCoroutine(PlayerDeadRoutine());
-    }
+    }    
 
     private IEnumerator PlayerDeadRoutine()
     {

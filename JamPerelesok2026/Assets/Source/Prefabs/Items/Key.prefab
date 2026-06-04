@@ -155,7 +155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1615305608037253638}
-  - component: {fileID: 1779343533800077583}
+  - component: {fileID: 9073995223846854163}
   - component: {fileID: 7153339041131460117}
   - component: {fileID: 4632820002905381001}
   - component: {fileID: 6516087552055812187}
@@ -183,7 +183,7 @@ Transform:
   - {fileID: 9111237280839671149}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1779343533800077583
+--- !u!114 &9073995223846854163
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,12 +192,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9048279657049978682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcf0397904cf98b4588652223f90d923, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f0b25ebeeba5f74298c08e755eaea14, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
-  _type: 2
-  _visual: {fileID: 7926977887391289212}
-  _targetIndeicator: {fileID: 6728844530419505615}
+  m_EditorClassIdentifier: Assembly-CSharp::Key
+  _interactionIndicator: {fileID: 6728844530419505615}
 --- !u!114 &7153339041131460117
 MonoBehaviour:
   m_ObjectHideFlags: 0

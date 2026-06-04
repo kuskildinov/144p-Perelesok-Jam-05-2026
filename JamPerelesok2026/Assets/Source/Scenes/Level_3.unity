@@ -4966,8 +4966,20 @@ PrefabInstance:
       objectReference: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 1592431691717641000, guid: 1be9f545e59bf764d908cb8442dabdd4, type: 3}
       propertyPath: _dialogPhrase.Phrase
-      value: "\u0424\u043E\u0442\u043E\u0433\u0440\u0430\u0444\u0438\u044F \u0441\u0447\u0430\u0441\u0442\u043B\u0438\u0432\u043E\u0439
-        \u0441\u0435\u043C\u044C\u0438"
+      value: "*\u0424\u043E\u0442\u043E\u0433\u0440\u0430\u0444\u0438\u044F \u0441\u0447\u0430\u0441\u0442\u043B\u0438\u0432\u043E\u0439
+        \u0441\u0435\u043C\u044C\u0438*"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592431691717641000, guid: 1be9f545e59bf764d908cb8442dabdd4, type: 3}
+      propertyPath: _dialogPhrase.Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592431691717641000, guid: 1be9f545e59bf764d908cb8442dabdd4, type: 3}
+      propertyPath: _dialogPhrase.Color.g
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592431691717641000, guid: 1be9f545e59bf764d908cb8442dabdd4, type: 3}
+      propertyPath: _dialogPhrase.Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1592431691717641000, guid: 1be9f545e59bf764d908cb8442dabdd4, type: 3}
       propertyPath: _interactionIndicator
@@ -5783,16 +5795,16 @@ MonoBehaviour:
   BlackFade: {fileID: 1008020605}
   _phrase_1:
     Phrase: "\u041E\u041D\u0418 \u0422\u0415\u0411\u042F \u0417\u0410\u0416\u0414\u0410\u041B\u0418\u0421\u042C."
-    Color: {r: 1, g: 0.5, b: 0, a: 1}
+    Color: {r: 1, g: 1, b: 1, a: 1}
     Type: 1
   _phrase_2:
     Phrase: "\u0421\u043F\u0430\u0441\u0438\u0431\u043E \u0442\u0435\u0431\u0435!"
-    Color: {r: 1, g: 1, b: 1, a: 1}
+    Color: {r: 1, g: 0.5, b: 0, a: 1}
     Type: 0
   _phrase_3:
     Phrase: "\u0422\u042B \u0421\u0414\u0415\u041B\u0410\u041B\u0410 \u0412\u0421\u0401
       \u0421\u0410\u041C\u0410. \u0418\u0414\u0418."
-    Color: {r: 1, g: 0.5, b: 0, a: 1}
+    Color: {r: 1, g: 1, b: 1, a: 1}
     Type: 1
   LastPictureObject: {fileID: 707547040}
   EndListGroup: {fileID: 1907240266}
@@ -6757,7 +6769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[1].Phrase
-      value: "\u0422\u044B \u0443\u0436\u0435 \u043D\u0430 \u043F\u0443\u0442\u0438."
+      value: "\u0422\u042B \u0423\u0416\u0415 \u041D\u0410 \u041F\u0423\u0422\u0418."
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[0].Color.a
@@ -6765,11 +6777,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[0].Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[0].Color.g
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[0].Color.r
@@ -6781,11 +6793,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[1].Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[1].Color.g
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[1].Color.r

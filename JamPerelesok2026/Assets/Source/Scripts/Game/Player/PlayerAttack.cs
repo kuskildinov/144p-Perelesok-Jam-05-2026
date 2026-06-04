@@ -6,14 +6,16 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private float _attackDuration;
     [Header("Attack Zones")]
-    [SerializeField] private AttackZone _topAttackZone;
-    [SerializeField] private AttackZone _bottomAttackZone;
-    [SerializeField] private AttackZone _leftAttackZone;
-    [SerializeField] private AttackZone _rightAttackZone;
+    [SerializeField] private AttackZone _attackPrefab;
+
+    [SerializeField] private Transform _topAttackZone;
+    [SerializeField] private Transform _bottomAttackZone;
+    [SerializeField] private Transform _leftAttackZone;
+    [SerializeField] private Transform _rightAttackZone;
 
     private Player _player;
     private PlayerInputHandler _inputHandler;
-    private AttackZone _curentAttackZone;
+    private Transform _curentAttackZone;
     private Coroutine _attackRoutine;
   
     public void Initialize(Player player, PlayerInputHandler inputHandler)
@@ -73,12 +75,15 @@ public class PlayerAttack : MonoBehaviour
         _attackRoutine = StartCoroutine(ActivateAttackZoneRoutine(_curentAttackZone));
     }
 
-    private IEnumerator ActivateAttackZoneRoutine(AttackZone zone)
+    private IEnumerator ActivateAttackZoneRoutine(Transform zone)
     {
         _player.ToggleActivation(false);
-        zone.gameObject.SetActive(true);
+        AttackZone currentZone = Instantiate(_attackPrefab, zone.position,zone.rotation);
+        currentZone.Initialize(zone);
+        currentZone.gameObject.SetActive(true);
+       
         yield return new WaitForSecondsRealtime(_attackDuration);
-        zone.gameObject.SetActive(false);
+        Destroy(currentZone.gameObject);
         _player.ToggleActivation(true);
     }
 

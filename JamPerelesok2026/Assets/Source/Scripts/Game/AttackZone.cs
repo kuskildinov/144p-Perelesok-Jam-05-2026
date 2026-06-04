@@ -7,6 +7,11 @@ public class AttackZone : MonoBehaviour
     public Transform DamagerCenter;
     public event Action OnActivated;
 
+    public void Initialize(Transform center)
+    {
+        DamagerCenter = center;
+    }
+
     public void Activate()
     {
         OnActivated?.Invoke();
