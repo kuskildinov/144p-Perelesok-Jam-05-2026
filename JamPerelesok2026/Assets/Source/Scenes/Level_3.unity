@@ -667,7 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterIllumination
   _updateRate: 0.1
-  _ambientLight: 0.15
+  _ambientLight: 0.001
   _smoothSpeed: 8
   _wallMask:
     serializedVersion: 2
