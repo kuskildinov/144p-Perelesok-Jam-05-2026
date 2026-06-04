@@ -8,7 +8,7 @@ public class PhoneItem : NarativeItem
     {
         base.TryInteract(player, item);
 
-        _callItem.gameObject.SetActive(false);
+        Destroy(_callItem.gameObject);
     }
 
 }

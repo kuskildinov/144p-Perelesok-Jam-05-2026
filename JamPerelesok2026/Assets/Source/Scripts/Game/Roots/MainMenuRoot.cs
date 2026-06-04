@@ -1,10 +1,14 @@
+using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuRoot : CompositeRoot
 {
     [SerializeField] private GameObject _confirmExitPanel;
     [SerializeField] private BlackFade _blackFade;
+    [SerializeField] private Image _teamImage;
 
     private MainMenuPanel _mainMenuPanel;
 
@@ -14,8 +18,28 @@ public class MainMenuRoot : CompositeRoot
         Cursor.lockState = CursorLockMode.None;
 
         InitializeMainMenuPanel();
+
+        ShowTeam();
     }
 
+    #region >>> TEAM 
+
+    private void ShowTeam()
+    {
+        StartCoroutine(TeamNameRoutine());
+    }
+
+    private IEnumerator TeamNameRoutine()
+    {      
+        yield return new WaitForSecondsRealtime(6f);
+        _blackFade.FadeOut(-1, () =>
+        {
+            _teamImage.gameObject.SetActive(false);
+            _blackFade.SetClearImmediate();
+        });       
+    }
+
+    #endregion
     #region >>> MAIN MENU PANEL
 
     private void InitializeMainMenuPanel()

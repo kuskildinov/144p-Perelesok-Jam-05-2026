@@ -53,7 +53,7 @@ public class LastCutScene : MonoBehaviour
                        
         EndListGroup.DOFade(1f, 1).WaitForCompletion();
 
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(10f);
 
         LevelRoot.LoadMainMenuScene();
     }

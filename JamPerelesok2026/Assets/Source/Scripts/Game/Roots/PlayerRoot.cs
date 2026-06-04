@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerRoot : CompositeRoot
@@ -12,6 +13,8 @@ public class PlayerRoot : CompositeRoot
     public Player Player => _player;
     public PlayerInputHandler InputHandler => _inputHandler;
     public PlayerMode CurrentPlayerMode => _playerModeHandler.CurrentPlayerMode;
+
+    public event Action<PlayerMode> PlayerModeChanged;
 
     public override void Compose()
     {
@@ -100,7 +103,7 @@ public class PlayerRoot : CompositeRoot
         _player.OnPlayerModeChanged(newMode);
         _cameraHandler.OnPlayerModeChanged(newMode);
         _levelRoot.OnPlayerModeChanged(newMode);
-
+        PlayerModeChanged?.Invoke(newMode);
         ChangeMouseVisibility(newMode);
     }
 

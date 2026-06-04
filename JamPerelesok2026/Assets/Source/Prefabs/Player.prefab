@@ -4881,7 +4881,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 7b7577aee006f3945a3fbd01ad4d1d5d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5745,7 +5745,7 @@ MonoBehaviour:
   _dropItemSound: {fileID: 8300000, guid: 44c6fec3c36773741ba060ef297b4673, type: 3}
   _takeItemSound: {fileID: 8300000, guid: 5ba2b3f62139cff448240f25e060751b, type: 3}
   _changeModeSound: {fileID: 8300000, guid: 41f414e9473522e4f97d83f0f0a1aff4, type: 3}
-  _deadSound: {fileID: 8300000, guid: 54239778edb08ab4ab8735f3a867d187, type: 3}
+  _deadSound: {fileID: 8300000, guid: 1ca24f2caef9f6644b1f93236f192492, type: 3}
   _illumanation: {fileID: 4389931637227497721}
   _darkEffect: {fileID: 4949186707196885895}
   _timeToDamageInDarkness: 3
