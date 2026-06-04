@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class LevelBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Transform _itemsContainer;
     [SerializeField] private Transform _enemysContainer;
@@ -35,20 +35,13 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         _originalScale = transform.localScale;
     }
   
-    public void OnPointerClick(PointerEventData eventData)
-    {      
-        if (!_canMove || _isMoved)
-            return;
-
-        _blocksHandler.SetCurrentBlock(this);      
-    }
-
     public void OnPointerEnter(PointerEventData eventData)
     {       
         if (!_canMove || _isMoved)
             return;
 
         ToggleOutline(true,true);
+        _blocksHandler.SetCurrentBlock(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)

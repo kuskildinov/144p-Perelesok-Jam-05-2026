@@ -41,12 +41,10 @@ public class LastCutScene : MonoBehaviour
         BlackFade.FadeOut(1, () =>
         {
             LastPictureObject.gameObject.SetActive(true);
-            BlackFade.FadeIn(-1, () =>
-            {
-                StartCoroutine(EndingRoutine());
-            }
-            );
+            BlackFade.FadeIn(-1, null);
         });
+
+        StartCoroutine(EndingRoutine());
     }
 
     private IEnumerator EndingRoutine()

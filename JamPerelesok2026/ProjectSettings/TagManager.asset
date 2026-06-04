@@ -44,6 +44,9 @@ TagManager:
   - name: BlackFade
     uniqueID: 623993701
     locked: 0
+  - name: HidenTips
+    uniqueID: 2328378501
+    locked: 0
   m_RenderingLayers:
   - Default
   m_MigratedRenderPipelines: []
