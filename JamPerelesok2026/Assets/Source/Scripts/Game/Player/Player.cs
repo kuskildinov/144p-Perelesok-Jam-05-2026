@@ -110,6 +110,8 @@ public class Player : MonoBehaviour
             _isActive = false;
         else
             _isActive = value;
+
+        ToggleWalkSound(false);
     }
 
     #endregion
