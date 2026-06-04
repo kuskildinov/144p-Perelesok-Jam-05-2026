@@ -387,6 +387,7 @@ MonoBehaviour:
   _materials:
   - {fileID: 2100000, guid: 5f43d5a7797fa4340b973455f79366d5, type: 2}
   - {fileID: 2100000, guid: fe9775e291695b743bc90db9d03d00ae, type: 2}
+  _collider: {fileID: 8583594129721344082}
 --- !u!1 &6645375436269062149
 GameObject:
   m_ObjectHideFlags: 0

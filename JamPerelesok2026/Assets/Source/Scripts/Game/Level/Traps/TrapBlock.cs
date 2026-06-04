@@ -13,8 +13,6 @@ public class TrapBlock : MonoBehaviour
     [SerializeField] private AttackZone _attackZone;
     [Header("Sounds")]
     [SerializeField] private AudioSource _commonSource;
-    [SerializeField] private AudioClip _activationSound;
-    [SerializeField] private AudioClip _deactivationSound;
     [SerializeField] private AudioClip _attackSound;
 
     private LevelTrapsHandler _trapshandler;

@@ -6,6 +6,7 @@ public class LevelBlockCell : MonoBehaviour
     [SerializeField] private GameObject _selectedOutline;
     [SerializeField] protected MeshRenderer _meshRenderer;
     [SerializeField] private Material[] _materials;
+    [SerializeField] private Collider _collider;
 
     public virtual void Start()
     {
@@ -23,6 +24,11 @@ public class LevelBlockCell : MonoBehaviour
             _selectedOutline.gameObject.SetActive(value);
         }
        
+    }
+
+    public void ToggleCollider(bool value)
+    {
+        _collider.enabled = value;
     }
 
     private void RandomizeMaterial()

@@ -10,6 +10,9 @@ public class MainMenuRoot : CompositeRoot
 
     public override void Compose()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         InitializeMainMenuPanel();
     }
 

@@ -121,12 +121,14 @@ public class LevelBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         DeactivateAllEnemys();
         PlayTurnSound();
         _collider.enabled = false;
+        ToggleColliderOnCells(false);
         RotateObject(gameObject, isLeft,
            () =>
            {
                _isMoved = false;
                ActivateAllEnemys();
                _collider.enabled = true;
+               ToggleColliderOnCells(true);
                onCompete?.Invoke();
            });
     }
@@ -162,6 +164,14 @@ public class LevelBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             OnComplete?.Invoke();
         });
+    }
+
+    private void ToggleColliderOnCells(bool value)
+    {
+        foreach (LevelBlockCell cell in _cells)
+        {
+            cell.ToggleCollider(value);
+        }
     }
 
     #endregion

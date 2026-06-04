@@ -1115,7 +1115,7 @@ MonoBehaviour:
   _downDuration: 1.5
   _delayBeforeDown: 0.5
   _attackZone: {fileID: 5730451545098114990}
-  _commonSource: {fileID: 0}
+  _commonSource: {fileID: 211968613871027062}
   _activationSound: {fileID: 0}
   _deactivationSound: {fileID: 0}
   _attackSound: {fileID: 8300000, guid: 53e228acbb0de4040ab93e2fb8365d70, type: 3}

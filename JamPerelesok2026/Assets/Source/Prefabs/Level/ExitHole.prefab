@@ -83,6 +83,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8302555114179367506}
   - component: {fileID: 578497907209584867}
+  - component: {fileID: 8060252149505665518}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -152,7 +153,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -300
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: b3ec44987cf492943a08308e82092446, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -164,6 +165,27 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &8060252149505665518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656029453318833367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea9fb7bccab0fd54fb051a0bc9517884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterIllumination
+  _updateRate: 0.1
+  _ambientLight: 0.001
+  _smoothSpeed: 8
+  _wallMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _enemyHeight: 0.5
+  _lightHeight: 0.2
+  _darknessThreshold: 0.05
 --- !u!1 &5987703224593026788
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7001158203326058579, guid: 2456bb7e77acefb458978f1fd64c4168, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7951401341822653876, guid: 2456bb7e77acefb458978f1fd64c4168, type: 3}
       propertyPath: m_Enabled
