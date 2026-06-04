@@ -13214,8 +13214,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3923218533970474949, guid: dd652cccb0864c145924b4600e836b54, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3923218533970474949, guid: dd652cccb0864c145924b4600e836b54, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3923218533970474949, guid: dd652cccb0864c145924b4600e836b54, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3923218533970474949, guid: dd652cccb0864c145924b4600e836b54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.6253
+      objectReference: {fileID: 0}
+    - target: {fileID: 3923218533970474949, guid: dd652cccb0864c145924b4600e836b54, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3923218533970474949, guid: dd652cccb0864c145924b4600e836b54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.6059
       objectReference: {fileID: 0}
     - target: {fileID: 4853161749048892301, guid: dd652cccb0864c145924b4600e836b54, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13556,7 +13576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _nextLevelScene
-      value: MainMenu
+      value: Level_3
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.size
