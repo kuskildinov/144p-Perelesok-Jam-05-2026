@@ -10352,6 +10352,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6942313755432550619, guid: dd652cccb0864c145924b4600e836b54, type: 3}
+      propertyPath: orthographic size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7477138150215281038, guid: dd652cccb0864c145924b4600e836b54, type: 3}
       propertyPath: m_Name
       value: '[SCENE]'

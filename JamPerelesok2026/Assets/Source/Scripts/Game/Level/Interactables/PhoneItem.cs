@@ -7,6 +7,7 @@ public class PhoneItem : NarativeItem
     public override void TryInteract(Player player, Item item)
     {
         base.TryInteract(player, item);
+        _callItem.StopCallSound();
 
         Destroy(_callItem.gameObject);
     }
