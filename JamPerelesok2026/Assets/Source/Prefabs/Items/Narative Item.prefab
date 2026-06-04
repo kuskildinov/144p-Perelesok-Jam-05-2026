@@ -208,8 +208,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.29
+  m_Height: 0.64
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2355234114912702704
@@ -257,6 +257,7 @@ MonoBehaviour:
       \u043F\u043E\u0440\u0432\u0430\u043B\u0438. \u042D\u0442\u043E \u0443\u0436\u0435
       \u0442\u0440\u0435\u0442\u0438\u0439 \u0437\u0430 \u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044C"
     Color: {r: 1, g: 1, b: 1, a: 1}
+    Type: 0
 --- !u!1 &7542228270364841592
 GameObject:
   m_ObjectHideFlags: 0

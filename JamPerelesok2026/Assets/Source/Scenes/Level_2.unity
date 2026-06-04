@@ -13583,6 +13583,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
+      propertyPath: _startDialogs.Array.data[1].Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startDialogs.Array.data[0].Phrase
       value: "\u0427\u0442\u043E \u0442\u044B \u044D\u0442\u0438\u043C \u0445\u043E\u0447\u0435\u0448\u044C
         \u0441\u043A\u0430\u0437\u0430\u0442\u044C?"

@@ -8,6 +8,7 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 {
     [SerializeField] private Transform _itemsContainer;
     [SerializeField] private Transform _enemysContainer;
+    [SerializeField] private Collider _collider;
     [SerializeField] private List<LevelBlockCell> _cells;
     [Header("Animation Settings")]
     [SerializeField] private float _rotateDuration = 0.5f;
@@ -126,12 +127,13 @@ public class LevelBlock : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {
         DeactivateAllEnemys();
         PlayTurnSound();
+        _collider.enabled = false;
         RotateObject(gameObject, isLeft,
            () =>
            {
                _isMoved = false;
                ActivateAllEnemys();
-
+               _collider.enabled = true;
                onCompete?.Invoke();
            });
     }

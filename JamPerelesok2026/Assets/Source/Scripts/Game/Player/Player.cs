@@ -62,6 +62,8 @@ public class Player : MonoBehaviour
         _playerHealth.Initialize(this);
         _darkEffect.Stop();
 
+        ToggleActivation(true);
+
         SubscribeToEvents();
     }
 

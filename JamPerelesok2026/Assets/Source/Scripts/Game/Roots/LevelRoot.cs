@@ -8,8 +8,7 @@ public class LevelRoot : CompositeRoot
 {
     [SerializeField] private int _levelIndex;
     [SerializeField] private string _nextLevelScene;
-    [SerializeField] private List<DialogPhrase> _startDialogs;
-    [SerializeField] private PlayableDirector _startCutScene;
+    [SerializeField] private List<DialogPhrase> _startDialogs;  
     [SerializeField] private GameObject _losePanel;
     [SerializeField] private GameObject _pausePanel;
 
@@ -38,7 +37,6 @@ public class LevelRoot : CompositeRoot
         InitializeLevelInteractablesHandler();
         InitializeStartDialogPanel();
         InitializeCommentsDialogPanel();
-        InitializeStartCutScene();
         SaveLevelIndex();
 
         TryShowStartPhrase();
@@ -50,9 +48,6 @@ public class LevelRoot : CompositeRoot
         ResumeGame();
 
         _blackFade.FadeIn();
-
-        PlayStartSceneCutScene();
-       
     }
 
     public void PauseGame()
@@ -68,6 +63,7 @@ public class LevelRoot : CompositeRoot
         _isGamePaused = false;
         ClosePausePanel();
         Time.timeScale = 1f;
+        _playeRoot.ToggleActivation(true);
         _playeRoot.SetCursorNotActive();
     }
 
@@ -76,35 +72,7 @@ public class LevelRoot : CompositeRoot
         GlobalVars.CurrentStartedSceneIndex = _levelIndex;
         PlayerPrefs.SetInt(GlobalVars.CurrentStartedSceneSaveKey, _levelIndex);
     }
-
-    #region >>> START CUT SCENE
-
-    private void InitializeStartCutScene()
-    {
-        if (_startCutScene != null)
-        {
-            _startCutScene.Stop();
-        }
-    }
-
-
-    private void PlayStartSceneCutScene()
-    {
-        if (_startCutScene == null)
-        {
-            OnStartCurSceneEnded();
-            return;
-        }
-
-        _startCutScene.Play();
-    }
-
-    public void OnStartCurSceneEnded()
-    {
-        _playeRoot.ToggleActivation(true);
-    }
-
-    #endregion
+       
     #region >>> PAUSE PANEL
 
     private void OpenPausePanel()

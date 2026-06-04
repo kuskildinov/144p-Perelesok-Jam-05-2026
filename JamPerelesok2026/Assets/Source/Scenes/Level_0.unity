@@ -267,11 +267,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 89960873858517266, guid: f76096cc5d30ea24ab736cd2299eab92, type: 3}
   m_PrefabInstance: {fileID: 71903704}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &92723932 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4309033759741985019, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
-  m_PrefabInstance: {fileID: 7262099277056906627}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &95833928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1222,11 +1217,6 @@ Transform:
 --- !u!4 &491551879 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7763501319997115048, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
-  m_PrefabInstance: {fileID: 7262099277056906627}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &491551887 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3511886678983540852, guid: 2ed41d642e7c5b749b0a8765b672cba7, type: 3}
   m_PrefabInstance: {fileID: 7262099277056906627}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &518292168
@@ -3689,59 +3679,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 89960873858517266, guid: f76096cc5d30ea24ab736cd2299eab92, type: 3}
   m_PrefabInstance: {fileID: 1588748741}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1630096969
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1630096970}
-  - component: {fileID: 1630096971}
-  m_Layer: 0
-  m_Name: '[CUT SCENES]'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1630096970
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1630096969}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.999, y: -0, z: 4.56003}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!320 &1630096971
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1630096969}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 7eea9632a10a1b84e80728c8ab6e3c12, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -6251707583036671672, guid: 7eea9632a10a1b84e80728c8ab6e3c12, type: 2}
-    value: {fileID: 491551887}
-  - key: {fileID: 9144195433182136002, guid: 7eea9632a10a1b84e80728c8ab6e3c12, type: 2}
-    value: {fileID: 92723932}
-  m_ExposedReferences:
-    m_References: []
 --- !u!1001 &1678674652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5178,7 +5115,11 @@ PrefabInstance:
     - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _startCutScene
       value: 
-      objectReference: {fileID: 1630096971}
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358182138600394544, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
+      propertyPath: _startDialogs.Array.data[0].Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8540444332398175199, guid: afdd7f0ce432ce842a06c28877799fd1, type: 3}
       propertyPath: _characterCam
       value: 
@@ -5522,7 +5463,6 @@ SceneRoots:
   - {fileID: 8770809989982281378}
   - {fileID: 6781009982887282138}
   - {fileID: 7244837343127189074}
-  - {fileID: 1630096970}
   - {fileID: 7262099277056906627}
   - {fileID: 1413764025}
   - {fileID: 926569957}
