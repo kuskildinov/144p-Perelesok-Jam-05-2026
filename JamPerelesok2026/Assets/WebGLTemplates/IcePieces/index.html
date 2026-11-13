@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#121212">
+  <title>{{{ PRODUCT_NAME }}} | Ice Pieces Games</title>
+  <link rel="icon" type="image/png" href="TemplateData/favicon.png">
+  <link rel="stylesheet" href="TemplateData/style.css">
+</head>
+<body>
+  <main id="unity-container">
+    <canvas id="unity-canvas" tabindex="-1" aria-label="Game"></canvas>
+    <section id="ip-loading" class="ip-loading" aria-label="Loading game">
+      <div class="ip-loading__content">
+        <img class="ip-logo" src="TemplateData/logo.png" alt="Ice Pieces Games">
+        <div id="ip-ring" class="ip-ring" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="ip-ring__track" cx="60" cy="60" r="51"></circle>
+            <circle id="ip-ring-progress" class="ip-ring__progress" cx="60" cy="60" r="51"></circle>
+          </svg>
+          <span id="ip-percent" class="ip-ring__number">0%</span>
+        </div>
+        <p id="ip-status" class="ip-status" role="status" aria-live="polite">Preparing game...</p>
+        <p class="ip-game-title">{{{ PRODUCT_NAME }}}</p>
+      </div>
+      <div class="ip-loading__footer">POWERED BY ICE PIECES GAMES</div>
+    </section>
+    <div id="ip-error" class="ip-error" role="alert" hidden>
+      <h2>Unable to start the game</h2>
+      <p id="ip-error-message">Please reload and try again.</p>
+      <button id="ip-retry" type="button">Reload</button>
+    </div>
+    <button id="ip-fullscreen" class="ip-fullscreen" type="button" aria-label="Toggle fullscreen" title="Fullscreen" hidden>⛶</button>
+  </main>
+  <script src="TemplateData/loading.js"></script>
+  <script>
+    (function () {
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+      var config = {
+        dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+        frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+        codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "{{{ COMPANY_NAME }}}",
+        productName: "{{{ PRODUCT_NAME }}}",
+        productVersion: "{{{ PRODUCT_VERSION }}}"
+      };
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = function () { window.IcePiecesLoader.start(config); };
+      script.onerror = function () { window.IcePiecesLoader.fail("Unable to download Unity loader. Check the server and network."); };
+      document.body.appendChild(script);
+    }());
+  </script>
+</body>
+</html>
